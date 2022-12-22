@@ -1,0 +1,28 @@
+{
+  "name": "shyflixclientside",
+  "version": "1.0.0",
+  "description": "The user interface that will connect to the server of the shyFlixApp",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel src/index.html",
+    "build": "parcel src/index.html",
+    "eject": "react-scripts eject",
+    "dev": "parcel src/index.html"
+  },
+  "author": "Shaya Lieberman",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.6.0",
+    "react-scripts": "^5.0.1"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.8.2",
+    "parcel": "^2.8.2",
+    "process": "^0.11.10"
+  }
+}
