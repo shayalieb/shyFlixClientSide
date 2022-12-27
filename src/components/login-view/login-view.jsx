@@ -14,8 +14,11 @@ export const LoginView = ({ onLoggedIn }) => {
             Password: password
         };
 
-        fetch('https://shyflixapp.herokuapp.com', {
+        fetch('https://shyflixapp.herokuapp.com/login', {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(data)
         }).then((response) => {
             if (response.ok) {

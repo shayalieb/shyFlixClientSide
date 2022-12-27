@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 
 export const ProfileView = () => {
-    const [username, updateUsername] = useState('');
-    const [password, updatePassword] = useState('');
-    const [email, updateEmail] = useState('');
-    const [birthday, updateBirthday] = useState('');
+    const [username, updateUsername] = useState(users);
+    const [password, updatePassword] = useState(user);
+    const [email, updateEmail] = useState(user);
+    const [birthday, updateBirthday] = useState(user);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -17,7 +17,7 @@ export const ProfileView = () => {
             Birthday: birthday
         };
 
-        fetch('https://shyflixapp.herokuapp.com/profile', {
+        fetch('https://shyflixapp.herokuapp.com/users/:Username', {
             method: 'PUT',
             body: JSON.stringify(updateData),
             headers: { "Content-Type": "application.json" }
@@ -70,7 +70,7 @@ export const ProfileView = () => {
                     onChange={(e) => updateBirthday(e.target.value)}
                 />
             </Form.Group>
-
+            <br></br>
             <Button variant='primary' type='submit'>Update Profile</Button>
         </Form>
     );

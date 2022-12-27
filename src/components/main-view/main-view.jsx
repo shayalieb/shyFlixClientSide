@@ -13,16 +13,16 @@ export const MainView = () => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        fetch('https://shyflixapp.herokuapp.com/')
+        fetch('https://shyflixapp.herokuapp.com/users/:Username')
             .then((response) => response.json())
             .then((data) => {
                 const moviesFromApi = data.doc.map((doc) => {
                     return {
-                        _id: doc.key,
-                        Title: doc.Title,
+                        _id: data.doc.key,
+                        Title: data.Movies.Title,
                         imagepath: `https://shyflixapp.herokuapp.com/movies/:_id/${movies.imagepath}`,
-                        Director: doc.Director.Name,
-                        Genre: doc.Genre.Name
+                        Director: data.doc.Director.Name,
+                        Genre: data.doc.Genre.Name
                     };
                 });
                 setMovies(moviesFromApi);
@@ -74,7 +74,7 @@ export const MainView = () => {
                         element={
                             <>
                                 {user ? (
-                                    <Navigate to='/' />
+                                    <Navigate to='/users' />
                                 ) : (
                                     <Col md={5}>
                                         <ProfileView onLoggedIn={(user) => setUser(user)} />
@@ -89,7 +89,7 @@ export const MainView = () => {
                         element={
                             <>
                                 {user ? (
-                                    <Navigate to='/login' replace />
+                                    <Navigate to='/movies' replace />
                                 ) : movies.length === 0 ? (
                                     <Col>This list is empty!</Col>
                                 ) : (
@@ -106,7 +106,7 @@ export const MainView = () => {
                         element={
                             <>
                                 {!user ? (
-                                    <Navigate to='/login' replace />
+                                    <Navigate to='/movies' replace />
                                 ) : movies.length === 0 ? (
                                     <Col>The movie list is empty!</Col>
                                 ) : (

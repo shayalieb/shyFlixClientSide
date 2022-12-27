@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import { Row, Col, Card } from 'react-bootstrap';
+import { Figure } from 'react-bootstrap';
 
 export const SignupView = () => {
     const [username, setUsername] = useState('');
@@ -18,10 +22,13 @@ export const SignupView = () => {
             Birthday: birthday
         };
 
-        fetch('https://shyflixapp.herokuapp.com/signup', {
+        fetch('https://shyflixapp.herokuapp.com/users', {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(data),
-            headers: { "Content-Type": "application/json" }
+
         }).then((response) => {
             if (response.ok) {
                 alert('You are now signed up!');
