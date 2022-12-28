@@ -1,28 +1,30 @@
-import { useState, useEffect } from 'react';
-import { LoginView } from '../login-view/login-view';
+//Import dependencies
+import { useState, useEffect } from 'react'
+import { Col, Row } from 'react-bootstrap';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+//Import components
 import { SignupView } from '../signup-view/signup-view';
+import { LoginView } from '../login-view/login-view';
+import { ProfileView } from '../profile-view/profile-view';
 import { MovieView } from '../movie-view/movie-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { NavigationBar } from '../navigation-bar/navigation-bar';
-import { ProfileView } from '../profile-view/profile-view';
-import { Col, Row } from 'react-bootstrap';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 export const MainView = () => {
     const [movies, setMovies] = useState([]);
     const [user, setUser] = useState(null);
 
+
     useEffect(() => {
-        fetch('https://shyflixapp.herokuapp.com/users/:Username')
+        fetch('https://shyflixapp.herokuapp.com/movies')
             .then((response) => response.json())
             .then((data) => {
-                const moviesFromApi = data.doc.map((doc) => {
+                const moviesFromApi = data.map((movies) => {
                     return {
-                        _id: data.doc.key,
-                        Title: data.Movies.Title,
-                        imagepath: `https://shyflixapp.herokuapp.com/movies/:_id/${movies.imagepath}`,
-                        Director: data.doc.Director.Name,
-                        Genre: data.doc.Genre.Name
+                        Title: movies.Title,
+                        imagepath: `/movies/${imagepath}`,
+                        Genre: movies.Genre.Name,
+                        Director: movies.Director.Name,
                     };
                 });
                 setMovies(moviesFromApi);
@@ -37,7 +39,7 @@ export const MainView = () => {
                     setUser(null);
                 }} />
 
-            <Row className='justify-content-md-center'>
+            <Row className='justify-content-center'>
                 <Routes>
                     <Route
                         path='/signup'
@@ -60,6 +62,7 @@ export const MainView = () => {
                             <>
                                 {user ? (
                                     <Navigate to='/' />
+
                                 ) : (
                                     <Col md={5}>
                                         <LoginView onLoggedIn={(user) => setUser(user)} />
@@ -70,28 +73,13 @@ export const MainView = () => {
                     />
 
                     <Route
-                        path='/profile'
+                        path='/movies/:Title'
                         element={
                             <>
-                                {user ? (
-                                    <Navigate to='/users' />
-                                ) : (
-                                    <Col md={5}>
-                                        <ProfileView onLoggedIn={(user) => setUser(user)} />
-                                    </Col>
-                                )}
-                            </>
-                        }
-                    />
-
-                    <Route
-                        path='/movies/:_id'
-                        element={
-                            <>
-                                {user ? (
-                                    <Navigate to='/movies' replace />
+                                {!user ? (
+                                    <Navigate to='/movies' />
                                 ) : movies.length === 0 ? (
-                                    <Col>This list is empty!</Col>
+                                    <Col>This list is empty</Col>
                                 ) : (
                                     <Col md={8}>
                                         <MovieView movies={movies} />
@@ -102,27 +90,43 @@ export const MainView = () => {
                     />
 
                     <Route
-                        path='/'
+                        path='/movies'
                         element={
                             <>
                                 {!user ? (
-                                    <Navigate to='/movies' replace />
+                                    <Navigate to='/' />
                                 ) : movies.length === 0 ? (
-                                    <Col>The movie list is empty!</Col>
+                                    <Col>The movie list is empty</Col>
                                 ) : (
                                     <>
-                                        {movies.map((movie) => {
-                                            <Col className='mb=4' key={movie._id} md={3}>
-                                                <MovieCard movie={movie} />
+                                        {movies.map((movies) => (
+                                            <Col className='mb-4' key={movies._id} md={3}>
+                                                <MovieCard movies={(movies) => setMovies(movies)} />
                                             </Col>
-                                        })}
+                                        ))}
                                     </>
+                                )}
+                            </>
+                        }
+                    />
+
+                    <Route
+                        path='/users'
+                        element={
+                            <>
+                                {user ? (
+                                    <Navigate to='/' replace />
+                                ) : (
+                                    <Col md={5}>
+                                        <ProfileView onLoggedIn={(user) => setUser(user)} />
+                                    </Col>
                                 )}
                             </>
                         }
                     />
                 </Routes>
             </Row>
+
         </BrowserRouter>
-    );
-};
+    )
+}
