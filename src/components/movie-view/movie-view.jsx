@@ -5,60 +5,35 @@ import './movie-view.scss';
 
 
 export const MovieView = ({ movies }) => {
-    const { handleFavorite } = useParams();
+    const { movieId } = useParams();
 
-    fetch('https://shyflixapp.herokuapp.com/movies')
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+    const movie = movies.find((m) => m._id === movieId)
 
     return (
-        <Row>
-            <Col md={8}>
-                <div className='movie-view'>
-                    <div className='movie-poster mt-3'>
-                        <Image src={`/movies/${imagepath}`} />
-                    </div>
-                    <div className='movie-title mt-3'>
-                        <span className='label'>Title: </span>
-                        <span className='value'>{movies.Title}</span>
-                    </div>
-                    <div className='movie-description'>
-                        <span className='label'>Description: </span>
-                        <span className='value'>{movies.Description}</span>
-                    </div>
-                    <div className='movie-director'>
-                        <span className='label'>Director: </span>
-                        <span className='value'>{movies.Director.Name}</span>
-                    </div>
-                    <div className='movie-genre'>
-                        <span className='label'>Genres: </span>
-                        <span className='value'>{movies.Genre.Name}</span>
-                    </div>
-                </div>
-                <Link to={`/Director/${movies.Director.Name}`}>
-                    <Button variant='link'>Director</Button>
-                </Link>
-                <Link to={`/movies/${movies.Genre.Name}`}>
-                    <Button variant='link'>Genres</Button>
-                </Link>
+        <div>
+            <div>
+                <img className='w-100' src={movie.imagepath} />
+            </div>
+            <div>
+                <span>Title: </span>
+                <span>{movie.title}</span>
+            </div>
+            <div>
+                <span>Description: </span>
+                <span>{movie.Description}</span>
+            </div>
+            <div>
+                <span>Genre: </span>
+                <span>{movie.Genre.Name}</span>
+            </div>
+            <div>
+                <span>Director: </span>
+                <span>{movie.Director.Name}</span>
+            </div>
 
-                <Button
-                    className='favorite-button mt-2'
-                    variant='primary'
-                    onClick={() => handleFavorite(movies._id, 'add')}>
-                    Add to Favorite Movies
-                </Button>
-
-                <Button
-                    className='back-button mt-2'
-                    variant='secondary'
-                    onClick={() => onBackClick()}>Back</Button>
-            </Col>
-        </Row>
+            <Link tp={`/`}>
+                <Button className='back-button'>Back</Button>
+            </Link>
+        </div>
     );
 };

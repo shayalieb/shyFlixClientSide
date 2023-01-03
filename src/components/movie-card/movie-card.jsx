@@ -5,23 +5,6 @@ import { Link } from "react-router-dom";
 
 
 export const MovieCard = ({ movies }) => {
-    const movieData = {
-        Title: movies.Title,
-        imagepath: movies.imagepath,
-        Genre: movies.genre.Name,
-        Director: movies.Director.Name,
-    };
-
-    fetch('https://shyflixapp.herokuapp.com/movies', {
-        method: 'GET',
-        body: JSON.stringify(movieData)
-    }).then((response) => {
-        if (response.ok) {
-            movies(movieData)
-        } else {
-            alert('Failed to load movie list')
-        }
-    })
 
     return (
         <Card className="h-100">

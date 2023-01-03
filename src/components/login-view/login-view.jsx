@@ -16,21 +16,22 @@ export const LoginView = ({ onLoggedIn }) => {
 
         fetch('https://shyflixapp.herokuapp.com/login', {
             method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-        }).then((response) => {
-            if (response.ok) {
-                response.json().then(data => {
-                    localStorage.getItem('token', data.token);
-                })
-                onLoggedIn(username);
-            } else {
-                alert('Login failed');
-            }
-        });
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then((response) => response.json())//Transforms into JSON so the code can extract the token
+            .then((data) => {
+                console.log('Login response: ', data);
+                if (data.user) {
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    localStorage.setItem('token', data.token)
+                    onLoggedIn(data.user, data.token);//Pass the user and the token to MainView so all API requests can be handled
+                } else {
+                    alert('The user does not exists');
+                }
+            })
+            .catch((e) => {
+                alert('Something went wrong')
+            })
     };
 
     return (

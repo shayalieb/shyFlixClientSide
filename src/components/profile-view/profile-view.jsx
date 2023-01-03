@@ -13,8 +13,6 @@ export function ProfileView() {
     const handleUpdate = (event) => {
         event.preventDefault();
 
-        const token = localStorage.getItem('token')
-
         const data = {
             Username: username,
             Password: password,
@@ -23,18 +21,13 @@ export function ProfileView() {
         }
 
         fetch('https://shyflixapp.herokuapp.com/users/:Username', {
-            headers: ({
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }),
             method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
 
         }).then((response) => {
             if (response.ok) {
-                response.json().then(data => {
-                    localStorage.setItem('token');
-                })
+
                 alert('Your profile has been updated');
                 window.location.reload();
             } else {
@@ -46,13 +39,13 @@ export function ProfileView() {
     const handleDelete = (event) => {
         event.preventDefault();
 
-        fetch('https://shyflixapp.herokuapp.com/users/:Username' + id, {
+        fetch('https://shyflixapp.herokuapp.com/users/:Username', {
             method: 'DELETE',
         }).then((response) => {
             if (response.ok) {
                 localStorage.removeItem('token', data.token);
                 alert('Your account has been deleted!');
-                window.location.reload(SignupView);
+                window.location.reload();
             } else {
                 alert('Failed to delete you account!')
             }
