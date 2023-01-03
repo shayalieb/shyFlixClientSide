@@ -1,87 +1,133 @@
 import React, { useState } from 'react'
-import { Button, Form,  } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
+import { Form, Col, Row, Button, Card } from 'react-bootstrap'
+import { LoginView } from '../login-view/login-view';
+import { SignupView } from '../signup-view/signup-view';
 
-export const ProfileView = ({ updateProfile }) => {
-    const [username, updateUsername] = useState(null);
-    const [password, updatePassword] = useState(null);
-    const [email, updateEmail] = useState(null);
-    const [birthday, updateBirthday] = useState(null);
+export function ProfileView() {
+    const [username, updateUsername] = useState([]);
+    const [password, updatePassword] = useState([]);
+    const [email, updateEmail] = useState([]);
+    const [birthday, updateBirthday] = useState([]);
 
     const handleUpdate = (event) => {
         event.preventDefault();
+
+        const token = localStorage.getItem('token')
 
         const data = {
             Username: username,
             Password: password,
             Email: email,
-            Birthday: birthday,
-        };
+            Birthday: birthday
+        }
 
         fetch('https://shyflixapp.herokuapp.com/users/:Username', {
+            headers: ({
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }),
             method: 'PUT',
             body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json"
+
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then(data => {
+                    localStorage.setItem('token');
+                })
+                alert('Your profile has been updated');
+                window.location.reload();
+            } else {
+                alert('Failed to update your profile');
             }
-        })
-            .then((response) => {
-                if (response.ok) {
-                    updateProfile()
-                    alert('Your account has been updated!')
-                    window.location.reload();
-                } else {
-                    alert('Failed to update your account');
-                }
-            });
+        });
+    };
+
+    const handleDelete = (event) => {
+        event.preventDefault();
+
+        fetch('https://shyflixapp.herokuapp.com/users/:Username' + id, {
+            method: 'DELETE',
+        }).then((response) => {
+            if (response.ok) {
+                localStorage.removeItem('token', data.token);
+                alert('Your account has been deleted!');
+                window.location.reload(SignupView);
+            } else {
+                alert('Failed to delete you account!')
+            }
+        });
     }
 
     return (
-        <Form onSubmit={handleUpdate}>
-            <Form.Group controlId='updateUsername'>
-                <Form.Label>Username: </Form.Label>
-                <Form.Control
-                    type='text'
-                    value={username}
-                    onChange={(e) => updateUsername(e.target.value)}
-                    minLength='6'
-                    placeholder='Update username'
-                />
-            </Form.Group>
+        <Row>
+            <Col>
+                <Card className='user-profile'>
+                    <Card.Header>User Profile</Card.Header>
+                    <Card.Body>
+                        <>
+                            <h4>Username: {username}</h4>
+                            <h4>Email: {email}</h4>
+                            <h4>Birthday: {birthday}</h4>
+                        </>
+                    </Card.Body>
+                </Card>
+            </Col>
+            <Col>
+                <Card className='update-fields'>
+                    <Card.Header>Update your Profile</Card.Header>
+                    <Card.Body>
+                        <Card.Text>
+                            <Form className='update-info' onSubmit={handleUpdate}>
+                                <Form.Group controlId='updateUsername'>
+                                    <Form.Label>Username: </Form.Label>
+                                    <Form.Control
+                                        type='text'
+                                        value={username}
+                                        onChange={(e) => updateUsername(e.target.value)}
+                                        minLength='6'
+                                        placeholder='Update Username'
+                                    />
+                                </Form.Group>
 
-            <Form.Group controlId='updatePassword'>
-                <Form.Label>Password: </Form.Label>
-                <Form.Control
-                    type='password'
-                    value={password}
-                    onChange={(e) => updatePassword(e.target.value)}
-                    minLength='8'
-                    placeholder='Update password'
-                />
-            </Form.Group>
+                                <Form.Group controlId='updatePassword'>
+                                    <Form.Label>Password: </Form.Label>
+                                    <Form.Control
+                                        type='password'
+                                        value={password}
+                                        onChange={(e) => updatePassword(e.target.value)}
+                                        minLength='8'
+                                        placeholder='Update Password'
+                                    />
+                                </Form.Group>
 
-            <Form.Group controlId='updateEmail'>
-                <Form.Label>Email: </Form.Label>
-                <Form.Control
-                    type='email'
-                    value={email}
-                    onChange={(e) => updateEmail(e.target.value)}
-                    placeholder='Update email address'
-                />
+                                <Form.Group controlId='updateEmail'>
+                                    <Form.Label>Email: </Form.Label>
+                                    <Form.Control
+                                        type='email'
+                                        value={email}
+                                        onChange={(e) => updateEmail(e.target.value)}
+                                        placeholder='Update Email'
+                                    />
+                                </Form.Group>
 
-                <Form.Group controlId='updateBirthday'>
-                    <Form.Label>Birthday: </Form.Label>
-                    <Form.Control
-                        type='date'
-                        value={birthday}
-                        onChange={(e) => updateBirthday(e.target.value)}
-                        placeholder='Update birthday MM/DD/YYY'
-                    />
-                </Form.Group>
+                                <Form.Group controlId='updateBirthday'>
+                                    <Form.Label>Email: </Form.Label>
+                                    <Form.Control
+                                        type='date'
+                                        value={birthday}
+                                        onChange={(e) => updateBirthday(e.target.value)}
+                                        placeholder='Update Birthday MM/DD/YYYY'
+                                    />
+                                </Form.Group>
+                                <Button variant='primary' type='submit' onClick={() => handleUpdate}>Update Profile</Button>
+                                <Button variant='danger' type='delete' onClick={() => handleDelete}>Delete Account</Button>
+                            </Form>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Row>
 
-
-            </Form.Group>
-            <br></br>
-            <Button className='update-button' type='submit'>Update Profile</Button>
-        </Form>
     );
 };

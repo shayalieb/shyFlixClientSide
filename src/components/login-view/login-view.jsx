@@ -23,6 +23,9 @@ export const LoginView = ({ onLoggedIn }) => {
 
         }).then((response) => {
             if (response.ok) {
+                response.json().then(data => {
+                    localStorage.getItem('token', data.token);
+                })
                 onLoggedIn(username);
             } else {
                 alert('Login failed');

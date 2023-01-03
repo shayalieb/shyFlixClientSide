@@ -14,12 +14,14 @@ export const MainView = () => {
     const [movies, setMovies] = useState([]);
     const [user, setUser] = useState(null);
 
+    const token = localStorage.getItem('token')
 
     useEffect(() => {
+        const localStorageToken = localStorage.getItem('token')
         fetch('https://shyflixapp.herokuapp.com/movies')
             .then((response) => response.json())
             .then((data) => {
-                const moviesFromApi = data.map((movies) => {
+                const moviesFromApi = token.data.map((movies) => {
                     return {
                         Title: movies.Title,
                         imagepath: `/movies/${imagepath}`,
@@ -27,7 +29,9 @@ export const MainView = () => {
                         Director: movies.Director.Name,
                     };
                 });
-                setMovies(moviesFromApi);
+                if (localStorageToken) {
+                    setMovies(moviesFromApi);
+                }
             });
     }, []);
 
@@ -42,7 +46,7 @@ export const MainView = () => {
             <Row className='justify-content-center'>
                 <Routes>
                     <Route
-                        path='/signup'
+                        path='/signup' 
                         element={
                             <>
                                 {user ? (
@@ -73,16 +77,16 @@ export const MainView = () => {
                     />
 
                     <Route
-                        path='/movies/:Title'
+                        path='/movies'
                         element={
                             <>
                                 {!user ? (
-                                    <Navigate to='/movies' />
+                                    <Navigate to='/' />
                                 ) : movies.length === 0 ? (
                                     <Col>This list is empty</Col>
                                 ) : (
                                     <Col md={8}>
-                                        <MovieView movies={movies} />
+                                        <MovieView onLoggedIn={(movies) => setMovies(movies)} />
                                     </Col>
                                 )}
                             </>
@@ -111,11 +115,11 @@ export const MainView = () => {
                     />
 
                     <Route
-                        path='/users'
+                        path='/users/:Username'
                         element={
                             <>
                                 {user ? (
-                                    <Navigate to='/' replace />
+                                    <Navigate to='/' />
                                 ) : (
                                     <Col md={5}>
                                         <ProfileView onLoggedIn={(user) => setUser(user)} />
@@ -128,5 +132,6 @@ export const MainView = () => {
             </Row>
 
         </BrowserRouter>
+
     )
 }
