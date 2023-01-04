@@ -16,21 +16,22 @@ export const LoginView = ({ onLoggedIn }) => {
 
         fetch('https://shyflixapp.herokuapp.com/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', },
+            body: JSON.stringify(data),
         })
-            .then((response) => response.json())//Transforms into JSON so the code can extract the token
+            .then((response) => response.json())
             .then((data) => {
-                console.log('Login response: ', data);
+                console.log('Login response:', data);
                 if (data.user) {
-                    localStorage.setItem('user', JSON.stringify(data.user));
+                    localStorage.setItem('user', data.user);
                     localStorage.setItem('token', data.token)
-                    onLoggedIn(data.user, data.token);//Pass the user and the token to MainView so all API requests can be handled
+                    onLoggedIn(data.user, data.token);
                 } else {
-                    alert('The user does not exists');
+                    alert('The user does not exist')
                 }
             })
             .catch((e) => {
-                alert('Something went wrong')
+                alert('Something has gone wrong')
             })
     };
 
@@ -63,4 +64,4 @@ export const LoginView = ({ onLoggedIn }) => {
             <Button variant='primary' type='submit'>Login</Button>
         </Form>
     );
-};
+}

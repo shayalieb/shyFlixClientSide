@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Col, Row, Button, Card } from 'react-bootstrap'
 import { LoginView } from '../login-view/login-view';
 import { SignupView } from '../signup-view/signup-view';
 
 export function ProfileView() {
+    const storedUpdate = localStorage.getItem('token');
+    const [update, setUpdate] = useState(storedUpdate ? storedUpdate : null)
     const [username, updateUsername] = useState([]);
     const [password, updatePassword] = useState([]);
     const [email, updateEmail] = useState([]);
@@ -19,38 +21,48 @@ export function ProfileView() {
             Email: email,
             Birthday: birthday
         }
-
-        fetch('https://shyflixapp.herokuapp.com/users/:Username', {
+        fetch('https://shyflixapp.herokuapp.com/users', {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+            },
 
-        }).then((response) => {
-            if (response.ok) {
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                localStorage.setItem('user', update.data, JSON.stringify(data)).then((update) => {
+                    setUpdate(update)
+                })
+                if (response.ok) {
+                    alert('Your profile has been updated');
+                    window.location.reload();
+                } else {
+                    alert('Failed to update your profile');
+                }
+            })
 
-                alert('Your profile has been updated');
-                window.location.reload();
-            } else {
-                alert('Failed to update your profile');
-            }
-        });
+
     };
 
     const handleDelete = (event) => {
         event.preventDefault();
 
-        fetch('https://shyflixapp.herokuapp.com/users/:Username', {
+        fetch('https://shyflixapp.herokuapp.com/users', {
             method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
         }).then((response) => {
+            localStorage.removeItem('token', data.token)
+            localStorage.removeItem('user', data.user).then((handleDelete) => {
+                handleDelete()
+            })
             if (response.ok) {
-                localStorage.removeItem('token', data.token);
                 alert('Your account has been deleted!');
-                window.location.reload();
+                window.location.reload(<SignupView />);
             } else {
                 alert('Failed to delete you account!')
             }
         });
-    }
+    };
 
     return (
         <Row>
@@ -113,7 +125,9 @@ export function ProfileView() {
                                         placeholder='Update Birthday MM/DD/YYYY'
                                     />
                                 </Form.Group>
+                                <br />
                                 <Button variant='primary' type='submit' onClick={() => handleUpdate}>Update Profile</Button>
+
                                 <Button variant='danger' type='delete' onClick={() => handleDelete}>Delete Account</Button>
                             </Form>
                         </Card.Text>
