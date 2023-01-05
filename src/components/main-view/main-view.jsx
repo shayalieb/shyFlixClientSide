@@ -10,22 +10,20 @@ import { MovieView } from '../movie-view/movie-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { NavigationBar } from '../navigation-bar/navigation-bar';
 
+
 export const MainView = () => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = JSON.parse(localStorage.getItem('user'));
     const storedToken = localStorage.getItem('token');
     const [user, setUser] = useState(storedUser ? storedUser : null);
     const [token, setToken] = useState(storedToken ? storedToken : null)
     const [movies, setMovies] = useState([]);
     const [selectedMovies, setSelectedMovies] = useState(null)
 
-    const data = {
-        user: '',
-        token: '',
-        movies: []
-    }
 
     useEffect(() => {
-
+        if (!token) {
+            return;
+        }
 
         fetch('https://shyflixapp.herokuapp.com/movies', {
             method: 'GET',
@@ -33,30 +31,26 @@ export const MainView = () => {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             },
-
-        }).then((response) => response.json(data))
-            .then((data) => {
-                localStorage.setItem('user', data.user, JSON.stringify(data)).then((user) => {
-                    setUser(user);
-                });
-                localStorage.setItem('token', data.token).then((movies) => {
+        }).then((response) => response.json())
+            .then((response) => {
+                localStorage.setItem('user', response.user)
+                localStorage.setItem('token').then((movies) => {
                     setMovies(movies);
                 });
             })
     }, [token]);
 
-
-
     if (!user) {
         return (
             <>
-                <h1>Welcome to the ShyFlix Movie App</h1>
-                <p>The shyFlix Movie App was designed to help keep track of all of your favorite movies. This way you can keep track of what you watched and what is on your watch list.</p>
+                <h1 className='welcome-text'>Welcome to the ShyFlix Movie App</h1>
+                <p className='welcome-message'>The shyFlix Movie App was designed to help keep track of all of your favorite movies. This way you can keep track of what you watched and what is on your watch list.</p>
                 <br />
                 <h5>If you are already a member, please log in to continue.</h5>
                 <LoginView onLoggedIn={(user, token) => {
                     setUser(user);
                     setToken(token);
+                    setMovies(movies);
                 }} />
                 <br />
                 <br />
@@ -76,6 +70,8 @@ export const MainView = () => {
                 user={user}
                 onLoggedOut={() => {
                     setUser(null);
+                    setToken(null);
+                    localStorage.clear();
                 }} />
             <Row className='justify-content-center'>
                 <Routes>
@@ -95,7 +91,7 @@ export const MainView = () => {
                     />
 
                     <Route
-                        path='/'
+                        path='/movies'
                         element={
                             <>
                                 {!user ? (
@@ -112,7 +108,7 @@ export const MainView = () => {
                     />
 
                     <Route
-                        path='/users'
+                        path='/users/:Username'
                         element={
                             <>
                                 {!user ? (

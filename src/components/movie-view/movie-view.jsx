@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Button, Image } from 'react-bootstrap';
 import './movie-view.scss';
 
-
 export const MovieView = ({ movies }) => {
     const { movieId } = useParams();
 
@@ -12,7 +11,7 @@ export const MovieView = ({ movies }) => {
     return (
         <div>
             <div>
-                <img className='w-100' src={movie.imagepath} />
+                <img className='w-100' src={movies.imagepath} />
             </div>
             <div>
                 <span>Title: </span>

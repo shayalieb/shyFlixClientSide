@@ -4,6 +4,7 @@ import { ProfileView } from '../profile-view/profile-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { LoginView } from '../login-view/login-view';
 import { SignupView } from '../signup-view/signup-view';
+import { MovieView } from '../movie-view/movie-view';
 
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
@@ -22,8 +23,8 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                         )}
                         {user && (
                             <>
-                                <Nav.Link as={Link} to='/'>Home</Nav.Link>
-                                <Nav.Link as={Link} to='/users'>Profile</Nav.Link>
+                                <Nav.Link as={Link} to='/movies'>Home</Nav.Link>
+                                <Nav.Link as={Link} to='/users/:Username'>Profile</Nav.Link>
                                 <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
 
                             </>

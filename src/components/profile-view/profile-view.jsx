@@ -5,12 +5,13 @@ import { LoginView } from '../login-view/login-view';
 import { SignupView } from '../signup-view/signup-view';
 
 export function ProfileView() {
-    const storedUpdate = localStorage.getItem('token');
+    const storedUpdate = JSON.parse(localStorage.getItem('user'));
     const [update, setUpdate] = useState(storedUpdate ? storedUpdate : null)
-    const [username, updateUsername] = useState([]);
-    const [password, updatePassword] = useState([]);
-    const [email, updateEmail] = useState([]);
-    const [birthday, updateBirthday] = useState([]);
+    const [username, updateUsername] = useState('');
+    const [password, updatePassword] = useState('');
+    const [email, updateEmail] = useState('');
+    const [birthday, updateBirthday] = useState('');
+
 
     const handleUpdate = (event) => {
         event.preventDefault();
@@ -21,21 +22,17 @@ export function ProfileView() {
             Email: email,
             Birthday: birthday
         }
-        fetch('https://shyflixapp.herokuapp.com/users', {
+        fetch('https://shyflixapp.herokuapp.com/users:Username', {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-
         })
             .then((response) => response.json())
             .then((response) => {
-                localStorage.setItem('user', update.data, JSON.stringify(data)).then((update) => {
+                localStorage.setItem('user', update.user, JSON.stringify(data)).then((update) => {
                     setUpdate(update)
                 })
                 if (response.ok) {
                     alert('Your profile has been updated');
-                    window.location.reload();
+                    window.location.reload(<ProfileView />);
                 } else {
                     alert('Failed to update your profile');
                 }
