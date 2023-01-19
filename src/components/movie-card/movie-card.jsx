@@ -1,29 +1,76 @@
-import React, { useState } from "react";
-import PropTypes from 'prop-types';
-import { Button, Card } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import { Card, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
+export const MovieCard = ({ user, token, movie, setUser }) => {
+    const isFavorite = (movieId) => {
+        return user.FavoriteMovies.includes(movieId);
+    };
 
-export const MovieCard = ({ movies }) => {
+    const toggleFavorites = (event) => {
+        event.preventDefault();
+
+        fetch(`https://shyflixapp.herokuapp.com//users/${user}/movies/${movie._id}`,
+            {
+                method: isFavorite(movie._id) ? 'POST' : 'DELETE',
+                headers: {
+                    Authorization: `Bearer: ${token}`,
+                },
+            }
+        )
+            .then((response) => response.json())
+            .then((updateUser) => {
+                localStorage.setItem('user', JSON.stringify(updateUser));
+                setUser(updateUser)
+            })
+            .catch((err) => {
+                console.error(err);
+                alert('Something went wrong');
+            });
+    };
 
     return (
-        <Card className="h-100">
-            <Card.Img variant="top" src={movies.imagepath} />
+        <Card className='h-100'>
+            <Card.Img variant='top' src={movie.imagepath} />
             <Card.Body>
-                <Card.Title>{movies.Title}</Card.Title>
-                <Card.Text>{movies.Description}</Card.Text>
-                <Link to={`/movies/${encodeURIComponent(movies._id)}`}>
-                    <Button variant="link">Open</Button>
-                </Link>
+                <Card.Title>{movie.Title}</Card.Title>
+                <Card.Text>{movie.Description}</Card.Text>
+                <Link
+                    className='btn btn-primary text-light w-100 mb-4'
+                    to={`/movies/${encodeURIComponent(movie._id)}`}
+                > Open </Link>
+                {/* <Button
+                    className='text-light w-100'
+                    variant={`${isFavorite(movie._id) ? 'success' : 'danger'}`}
+                    onClick={toggleFavorites}
+                >
+                    {isFavorite(movie._id) ? 'Add to Favorite Movies' : 'Remove from Favorite Movies'}
+                </Button> */}
             </Card.Body>
         </Card>
     );
-};
+}
 
 MovieCard.propTypes = {
-    movies: PropTypes.shape({
+    // user: PropTypes.shape({
+    //     Username: PropTypes.string.isRequired,
+    //     Email: PropTypes.string.isRequired,
+    //     Birthday: PropTypes.string.isRequired,
+    //     FavoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
+    // }).isRequired,
+    token: PropTypes.string.isRequired,
+    setUser: PropTypes.func.isRequired,
+    movie: PropTypes.shape({
         Title: PropTypes.string.isRequired,
+        Description: PropTypes.string.isRequired,
         imagepath: PropTypes.string.isRequired,
-        Description: PropTypes.string.isRequired
-    }).isRequired
+        Genre: PropTypes.shape({
+            Name: PropTypes.string.isRequired,
+            Description: PropTypes.string.isRequired,
+        }).isRequired,
+        Director: PropTypes.shape({
+            Name: PropTypes.string.isRequired,
+            Bio: PropTypes.string.isRequired,
+        }).isRequired,
+    }).isRequired,
 };

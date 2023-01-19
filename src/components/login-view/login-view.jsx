@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import { PropTypes } from 'prop-types';
 import Form from 'react-bootstrap/Form';
 
 export const LoginView = ({ onLoggedIn }) => {
@@ -16,27 +17,34 @@ export const LoginView = ({ onLoggedIn }) => {
 
         fetch('https://shyflixapp.herokuapp.com/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', },
             body: JSON.stringify(data),
+            headers: { 'Content-Type': 'application/json' },
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('Login response:', data);
+                //console.log('Login response:', data);
                 if (data.user) {
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                    localStorage.setItem('token', data.token)
+                    // localStorage.setItem('user', JSON.stringify(data.user));
+                    // localStorage.setItem('token', data.token)
                     onLoggedIn(data.user, data.token);
                 } else {
-                    alert('The user does not exist')
+                    alert('The user does not exist');
                 }
             })
-            .catch((e) => {
-                alert('Something has gone wrong')
-            })
+            .catch((err) => {
+                console.error(err);
+                alert('Something has gone wrong');
+            });
     };
 
     return (
         <Form onSubmit={handleSubmit}>
+            <br />
+            <br />
+            <br />
+            <h2 className='text-enter'>Login</h2>
+            <hr />
+            <br />
             <Form.Group controlId='formUsername'>
                 <Form.Label>Username: </Form.Label>
                 <Form.Control
@@ -47,7 +55,7 @@ export const LoginView = ({ onLoggedIn }) => {
                     minLength='6'
                 />
             </Form.Group>
-
+            <br />
             <Form.Group controlId='formPassword'>
                 <Form.Label>Password: </Form.Label>
                 <Form.Control
@@ -59,9 +67,13 @@ export const LoginView = ({ onLoggedIn }) => {
                 />
             </Form.Group>
 
-            <br></br>
+            <br />
 
             <Button variant='primary' type='submit'>Login</Button>
         </Form>
     );
-}
+};
+
+LoginView.prototypes = {
+    onLoggedIn: PropTypes.func.isRequired,
+};
