@@ -26,11 +26,11 @@
     "react-token-auth": "^2.3.8"
   },
   "devDependencies": {
-    "@parcel/transformer-react-refresh-wrap": "^2.8.3",
-    "@parcel/transformer-sass": "^2.8.2",
+    "@parcel/transformer-sass": "^2.8.3",
     "buffer": "^5.7.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "parcel": "^2.8.2",
+    "parcel": "^2.8.3",
+    "parcel-bundler": "^1.12.5",
     "process": "^0.11.10"
   }
 }

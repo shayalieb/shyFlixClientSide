@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button, Container, Row, Col, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { MovieCard } from '../movie-card/movie-card';
+import { MovieView } from "../movie-view/movie-view";
 
 export const ProfileView = ({ movies }) => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -13,23 +14,9 @@ export const ProfileView = ({ movies }) => {
     const [password, updatePassword] = useState('');
     const [email, updateEmail] = useState(user.Email);
     const [birthday, updateBirthday] = useState(user.Birthday.substring(0, 10));
+    const [favoriteMovies, setFavoriteMovies] = useState(user.FavoriteMovies)
+    const showFavorite = movies.filter((m) => user.FavoriteMovies && user.FavoriteMovies === m._id)
 
-    let favoriteMovies = movies && movies.filter((m) =>
-        user.FavoriteMovies && user.FavoriteMovies.indexOf(m._id) >= 0
-    );
-
-    const updateUser = (username) => {
-        fetch('https://shyflixapp.herokuapp.com/users/' + username, {
-            headers: { Authorization: `Bearer ${token}` },
-        })
-            .then((response) => response.json())
-            .then((user) => {
-                if (user) {
-                    setUser(user);
-                    localStorage.getItem('user', JSON.stringify(user))
-                }
-            });
-    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -38,22 +25,23 @@ export const ProfileView = ({ movies }) => {
             Username: username,
             Password: password,
             Email: email,
-            Birthday: birthday
+            Birthday: birthday,
         };
 
-        fetch('https://shyflixapp.herokuapp.com/users/' + user.Username,
+        fetch(`http://localhost:8080/users/${encodeURIComponent(user.Username)}`,
             {
                 method: 'PUT',
                 body: JSON.stringify(data),
                 headers: {
-                    'Application-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+
                 },
             }).then((response) => {
                 if (response.ok) {
                     alert('Your profile has been updated');
-                    updateUser(user.Username);
-                    window.location.reload();
+                    localStorage.setItem('user', JSON.stringify(data))
+                    window.location.reload()
                 } else {
                     alert('Unable to update your profile')
                 }
@@ -64,7 +52,7 @@ export const ProfileView = ({ movies }) => {
 
     const deleteUser = () => {
 
-        fetch(`https://shyflixapp.herokuapp.com/users/${encodeURIComponent(
+        fetch(`http://localhost:8080/users/${encodeURIComponent(
             user.Username
         )}`,
             {
@@ -167,20 +155,23 @@ export const ProfileView = ({ movies }) => {
                     <Col>
                         <h3>Favorite Movies</h3>
                         <hr />
+                        <Row md={6} className='fav-movies-card'>
+
+                        </Row>
                     </Col>
                 </Row>
-                <Row>
-                    {favoriteMovies.map((m) => (
-                        <Col md={3} className='mb-4' key={m._id}>
-                            <MovieCard
-                                movie={m}
-                                user={user}
-                                token={token}
-                                setUser={setUser}
-                            />
-                        </Col>
-                    ))}
-                </Row>
+                {movies.map((fm) => (
+                    <Row
+                        md={3}
+                        className='mb-4'
+                        key={fm._id}
+                    >
+                        <MovieCard 
+                            className='h-100'
+                            movie={fm} />
+                    </Row>
+                ))}
+
             </Container>
         </>
     );

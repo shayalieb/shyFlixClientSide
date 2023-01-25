@@ -15,18 +15,19 @@ export const LoginView = ({ onLoggedIn }) => {
             Password: password
         };
 
-        fetch('https://shyflixapp.herokuapp.com/login', {
+        fetch('http://localhost:8080/login', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' },
         })
             .then((response) => response.json())
             .then((data) => {
-                //console.log('Login response:', data);
+                console.log('Login response:', data);
                 if (data.user) {
-                    // localStorage.setItem('user', JSON.stringify(data.user));
-                    // localStorage.setItem('token', data.token)
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    localStorage.setItem('token', data.token)
                     onLoggedIn(data.user, data.token);
+                    window.location.reload();
                 } else {
                     alert('The user does not exist');
                 }

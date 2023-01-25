@@ -20,7 +20,7 @@ export const SignupView = () => {
             Birthday: birthday
         };
 
-        fetch('https://shyflixapp.herokuapp.com/users', {
+        fetch('http://localhost:8080/users', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

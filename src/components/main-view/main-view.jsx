@@ -13,6 +13,7 @@ import { NavigationBar } from "../navigation-bar/navigation-bar";
 
 export const MainView = () => {
 
+    //const [movies, setMovies] = useState([]);
     const [movies, setMovies] = useState(
         localStorage.getItem('movies')
             ? JSON.parse(localStorage.getItem('movies'))
@@ -31,7 +32,7 @@ export const MainView = () => {
     useEffect(() => {
         if (!token) return;
 
-        fetch("https://shyflixapp.herokuapp.com/movies", {
+        fetch("http://localhost:8080/movies", {
             headers: { Authorization: `Bearer ${token}` },
         })
             .then((response) => response.json())
@@ -91,7 +92,7 @@ export const MainView = () => {
                         }
                     />
                     <Route
-                        path="/movies/:_id"
+                        path="/movies/:movieId"
                         element={
                             <>
                                 {!user ? (
@@ -100,12 +101,7 @@ export const MainView = () => {
                                     <Col>The list is empty!</Col>
                                 ) : (
                                     <Col md={8}>
-                                        <MovieView
-                                            user={user}
-                                            token={token}
-                                            setUser={setUser}
-                                            movie={movies}
-                                        />
+                                        <MovieView movies={movies} />
                                     </Col>
                                 )}
                             </>
@@ -127,9 +123,9 @@ export const MainView = () => {
                                                 <br />
                                                 <MovieCard
                                                     movie={movie}
-                                                    user={user}
-                                                    token={token}
-                                                    setUser={setUser}
+                                                // user={user}
+                                                // token={token}
+                                                // setUser={setUser}
                                                 />
                                             </Col>
                                         ))}
@@ -149,12 +145,12 @@ export const MainView = () => {
                                 ) : (
                                     <Col>
                                         <ProfileView
+                                            movies={movies}
                                             user={user}
                                             token={token}
                                             setUser={setUser}
-                                            movies={movies}
-                                            setToken={setToken}
-                                        />
+                                            
+                                         />
                                     </Col>
                                 )}
                             </>
