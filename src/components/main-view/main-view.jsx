@@ -32,7 +32,7 @@ export const MainView = () => {
     useEffect(() => {
         if (!token) return;
 
-        fetch("http://localhost:8080/movies", {
+        fetch("https://shyflixapp.herokuapp.com/movies", {
             headers: { Authorization: `Bearer ${token}` },
         })
             .then((response) => response.json())
@@ -145,12 +145,7 @@ export const MainView = () => {
                                 ) : (
                                     <Col>
                                         <ProfileView
-                                            movies={movies}
-                                            user={user}
-                                            token={token}
-                                            setUser={setUser}
-                                            
-                                         />
+                                            movies={movies} />
                                     </Col>
                                 )}
                             </>

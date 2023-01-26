@@ -11,11 +11,11 @@ export const MovieView = ({ movies }) => {
     const storedToken = localStorage.getItem('token');
     const [token, setToken] = useState(storedToken ? storedToken : null)
     const [user, setUser] = useState(storedUser ? storedUser : null)
-
     const { movieId } = useParams();
     const movie = movies.find((m) => m._id === movieId)
-    const similarMovies = movies.filter((m) => m._id && m.Genre.Name === movie.Genre.Name);
+    const similarMovies = movies.filter((sm) => sm._id && sm.Genre.Name === movie.Genre.Name);
     const [isFavorite, setIsFavorite] = useState([]);
+
 
 
 
@@ -25,7 +25,7 @@ export const MovieView = ({ movies }) => {
 
 
         fetch(
-            `http://localhost:8080/users/${user.Username}/movies/${movie._id}`,
+            `https://shyflixapp.herokuapp.com/users/${user.Username}/movies/${movie._id}`,
             {
                 method: "POST",
                 headers: {
@@ -41,7 +41,7 @@ export const MovieView = ({ movies }) => {
                 setUser(isFavorite);
             })
             .catch((err) => {
-                alert("Process failed");
+                console.error(err);
             });
     };
 
@@ -49,7 +49,7 @@ export const MovieView = ({ movies }) => {
         event.preventDefault();
 
         fetch(
-            `http://localhost:8080/users/${user.Username}/movies/${movie._id}`,
+            `https://shyflixapp.herokuapp.com/users/${user.Username}/movies/${movie._id}`,
             {
                 method: "DELETE",
                 headers: {
@@ -120,7 +120,7 @@ export const MovieView = ({ movies }) => {
             </Row>
             {similarMovies.map((sm) => (
                 <Row
-                    md={3}
+                    md={10}
                     className='mb-4'
                     key={sm._id}
                 >

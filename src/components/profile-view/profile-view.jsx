@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Row, Col, Form } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import { MovieCard } from '../movie-card/movie-card';
-import { MovieView } from "../movie-view/movie-view";
+
 
 export const ProfileView = ({ movies }) => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -14,9 +13,14 @@ export const ProfileView = ({ movies }) => {
     const [password, updatePassword] = useState('');
     const [email, updateEmail] = useState(user.Email);
     const [birthday, updateBirthday] = useState(user.Birthday.substring(0, 10));
-    const [favoriteMovies, setFavoriteMovies] = useState(user.FavoriteMovies)
-    const showFavorite = movies.filter((m) => user.FavoriteMovies && user.FavoriteMovies === m._id)
 
+    const favoriteList = movies.filter((m) =>
+        user.FavoriteMovies.includes(m._id)
+    )
+
+    const showFavorite = movies.filter((m) => {
+        user.FavoriteMovies.includes(m._id)
+    })
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -28,7 +32,7 @@ export const ProfileView = ({ movies }) => {
             Birthday: birthday,
         };
 
-        fetch(`http://localhost:8080/users/${encodeURIComponent(user.Username)}`,
+        fetch(`https://shyflixapp.herokuapp.com/users/${encodeURIComponent(user.Username)}`,
             {
                 method: 'PUT',
                 body: JSON.stringify(data),
@@ -52,7 +56,7 @@ export const ProfileView = ({ movies }) => {
 
     const deleteUser = () => {
 
-        fetch(`http://localhost:8080/users/${encodeURIComponent(
+        fetch(`https://shyflixapp.herokuapp.com/users/${encodeURIComponent(
             user.Username
         )}`,
             {
@@ -152,55 +156,24 @@ export const ProfileView = ({ movies }) => {
 
             <Container className='mt-5 pe-0 ps-0'>
                 <Row>
-                    <Col>
-                        <h3>Favorite Movies</h3>
-                        <hr />
-                        <Row md={6} className='fav-movies-card'>
+                    {favoriteList.length === 0 ? (
+                        <h4>You have no favorite movies</h4>
+                    ) : (
+                        <>
+                            <h2 className="text-start mb-4">Favorite Movies</h2>
+                            {favoriteList.map((movie) => (
+                                <Col className="mb-5" key={movie._id}>
+                                    <MovieCard
+                                        movie={movie}
+                                    />
 
-                        </Row>
-                    </Col>
+                                </Col>
+                            ))}
+                        </>
+                    )}
                 </Row>
-                {movies.map((fm) => (
-                    <Row
-                        md={3}
-                        className='mb-4'
-                        key={fm._id}
-                    >
-                        <MovieCard 
-                            className='h-100'
-                            movie={fm} />
-                    </Row>
-                ))}
-
             </Container>
         </>
     );
 };
-
-// ProfileView.propTypes = {
-//     user: PropTypes.shape({
-//         Username: PropTypes.string.isRequired,
-//         Email: PropTypes.string.isRequired,
-//         Birthday: PropTypes.string.isRequired,
-//         FavoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
-//     }).isRequired,
-//     token: PropTypes.string.isRequired,
-//     setUser: PropTypes.func.isRequired,
-//     setToken: PropTypes.func.isRequired,
-//     movies: PropTypes.arrayOf(
-//         PropTypes.shape({
-//             Title: PropTypes.string.isRequired,
-//             Description: PropTypes.string.isRequired,
-//             imagepath: PropTypes.string.isRequired,
-//             Genre: PropTypes.shape({
-//                 Name: PropTypes.string.isRequired,
-//                 Description: PropTypes.string.isRequired,
-//             }).isRequired,
-//             Director: PropTypes.shape({
-//                 Name: PropTypes.string.isRequired,
-//                 Bio: PropTypes.string.isRequired,
-//             }).isRequired,
-//         }).isRequired
-//     ).isRequired,
-// };
 

@@ -1,13 +1,6 @@
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useState } from 'react-router-dom'
-import { MovieCard } from '../movie-card/movie-card';
-// import { ProfileView } from '../profile-view/profile-view';
-// import { MovieCard } from '../movie-card/movie-card';
-// import { LoginView } from '../login-view/login-view';
-// import { SignupView } from '../signup-view/signup-view';
-// import { MovieView } from '../movie-view/movie-view';
 
 export function NavigationBar({ user, onLoggedOut }) {
 

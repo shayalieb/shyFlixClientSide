@@ -1,9 +1,8 @@
 import { Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 
-export const MovieCard = ({ movie, user, setUser, token }) => {
+export const MovieCard = ({ movie }) => {
 
     return (
         <Card className='h-100'>
@@ -19,10 +18,3 @@ export const MovieCard = ({ movie, user, setUser, token }) => {
     );
 };
 
-// MovieCard.propTypes = {
-//     movie: PropTypes.shape({
-//         Title: PropTypes.string.isRequired,
-//         Description: PropTypes.string.isRequired,
-//         ImagePath: PropTypes.string.isRequired
-//     }).isRequired,
-// };

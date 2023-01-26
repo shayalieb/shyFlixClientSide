@@ -1,8 +1,5 @@
 import { useState } from 'react';
 import { Button, Form, Container } from 'react-bootstrap';
-import MainView from '../main-view/main-view';
-
-
 
 export const SignupView = () => {
     const [username, setUsername] = useState('');
@@ -20,7 +17,7 @@ export const SignupView = () => {
             Birthday: birthday
         };
 
-        fetch('http://localhost:8080/users', {
+        fetch('https://shyflixapp.herokuapp.com/users', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
