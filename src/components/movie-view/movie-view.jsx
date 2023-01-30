@@ -3,8 +3,9 @@ import React from 'react';
 import { Button, Col, Row, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import './movie-view.scss';
 import { MovieCard } from '../movie-card/movie-card';
+import './movie-view.scss';
+
 
 export const MovieView = ({ movies }) => {
     const storedUser = JSON.parse(localStorage.getItem('user'));

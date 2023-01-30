@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@parcel/transformer-js": "^2.8.2",
+    "@reduxjs/toolkit": "^1.9.1",
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
     "prop-types": "^15.8.1",
@@ -20,6 +21,7 @@
     "react-bootstrap": "^2.7.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-router": "^6.6.0",
     "react-router-dom": "^6.6.0",
     "react-scripts": "^5.0.1",

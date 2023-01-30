@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { PropTypes } from 'prop-types';
 import Form from 'react-bootstrap/Form';
+import './login-view.scss'
 
 export const LoginView = ({ onLoggedIn }) => {
     const [username, setUsername] = useState('');
@@ -39,13 +40,12 @@ export const LoginView = ({ onLoggedIn }) => {
     };
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <br />
-            <br />
-            <br />
+
+        <Form className='login-form' onSubmit={handleSubmit}>
+            <h1 className='welcome-login'>Welcome to the the shyFlix Movie App!</h1>
+
             <h2 className='text-enter'>Login</h2>
             <hr />
-            <br />
             <Form.Group controlId='formUsername'>
                 <Form.Label>Username: </Form.Label>
                 <Form.Control
@@ -56,7 +56,7 @@ export const LoginView = ({ onLoggedIn }) => {
                     minLength='6'
                 />
             </Form.Group>
-            <br />
+
             <Form.Group controlId='formPassword'>
                 <Form.Label>Password: </Form.Label>
                 <Form.Control
@@ -68,10 +68,10 @@ export const LoginView = ({ onLoggedIn }) => {
                 />
             </Form.Group>
 
-            <br />
-
-            <Button variant='primary' type='submit'>Login</Button>
+            <Button className='button login-button' size='lg' variant='primary' type='submit'>Login</Button>
         </Form>
+
+
     );
 };
 

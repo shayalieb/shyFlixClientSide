@@ -1,14 +1,16 @@
 import { createRoot } from 'react-dom/client'
 import { MainView } from './components/main-view/main-view';
 import Container from 'react-bootstrap/Container';
+//Import redux dependencies
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
 
 const App = () => {
     return (
-        <Container>
-            <MainView />
-        </Container>
+            <Container>
+                <MainView />
+            </Container>
     );
 };
 

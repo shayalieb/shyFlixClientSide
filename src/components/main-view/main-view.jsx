@@ -1,19 +1,22 @@
+//App dependencies
 import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { BrowserRouter, Routes, Route, Navigate, useResolvedPath } from "react-router-dom";
-
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+//Import the various views
 import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { SignupView } from "../signup-view/signup-view";
 import { ProfileView } from "../profile-view/profile-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
+//Redux dependencies
+
+
 
 export const MainView = () => {
 
-    //const [movies, setMovies] = useState([]);
     const [movies, setMovies] = useState(
         localStorage.getItem('movies')
             ? JSON.parse(localStorage.getItem('movies'))
