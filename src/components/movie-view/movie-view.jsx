@@ -5,13 +5,16 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { MovieCard } from '../movie-card/movie-card';
 import './movie-view.scss';
+import { useSelector } from 'react-redux';
 
 
-export const MovieView = ({ movies }) => {
+export const MovieView = () => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     const storedToken = localStorage.getItem('token');
-    const [token, setToken] = useState(storedToken ? storedToken : null)
-    const [user, setUser] = useState(storedUser ? storedUser : null)
+    const [token, setToken] = useState(storedToken ? storedToken : null);
+    const movies = useSelector((state) => state.movies.list);
+    const user = useSelector((state) => state.user)
+    // const [user, setUser] = useState(storedUser ? storedUser : null)
     const { movieId } = useParams();
     const movie = movies.find((m) => m._id === movieId)
     const similarMovies = movies.filter((sm) => sm._id && sm.Genre.Name === movie.Genre.Name);

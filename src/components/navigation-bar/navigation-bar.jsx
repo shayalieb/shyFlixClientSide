@@ -2,8 +2,13 @@ import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Logo from './shyflix-logo.png'
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../../redux/reducers/user'
+import './navigation-bar.scss'
 
-export function NavigationBar({ user, onLoggedOut }) {
+export const NavigationBar = () => {
+    const user = useSelector((state) => state.user)
+    const dispatch = useDispatch();
 
     return (
         <Navbar className='navbar' bg='dark' variant='dark' expand='md' fixed='top'>
@@ -28,9 +33,7 @@ export function NavigationBar({ user, onLoggedOut }) {
                                 {user.Username}
                             </Link>
                             <Button className='primary text-light'
-                                onClick={() => {
-                                    onLoggedOut();
-                                }}
+                                onClick={() => dispatch(setUser(null))}
                             >Logout</Button>
                         </>
                     ) : null}
@@ -41,9 +44,9 @@ export function NavigationBar({ user, onLoggedOut }) {
     );
 };
 
-NavigationBar.propTypes = {
-    Username: PropTypes.shape({
-        Username: PropTypes.string.isRequired,
-    }),
-    onLoggedOut: PropTypes.func.isRequired,
-};
+// NavigationBar.propTypes = {
+//     Username: PropTypes.shape({
+//         Username: PropTypes.string.isRequired,
+//     }),
+//     onLoggedOut: PropTypes.func.isRequired,
+// };

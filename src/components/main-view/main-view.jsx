@@ -12,24 +12,32 @@ import { SignupView } from "../signup-view/signup-view";
 import { ProfileView } from "../profile-view/profile-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 //Redux dependencies
+import { useSelector, useDispatch } from "react-redux";
+import { setMovies } from "../../redux/reducers/movies";
+import { setUser } from "../../redux/reducers/user";
+import { MovieList } from "../movie-list/movie-list";
+import { setToken } from "../../redux/reducers/token"
 
 
 
 export const MainView = () => {
 
-    const [movies, setMovies] = useState(
-        localStorage.getItem('movies')
-            ? JSON.parse(localStorage.getItem('movies'))
-            : []
-    );
-    const [user, setUser] = useState(
-        localStorage.getItem('user')
-            ? JSON.parse(localStorage.getItem('user'))
-            : null
-    );
-    const [token, setToken] = useState(
-        localStorage.getItem('token')
-    );
+    const movies = useSelector((state) => state.movies.list);
+    const user = useSelector((state) => state.user)
+    const token = useSelector((state) => state.token)
+    // const [movies, setMovies] = useState(
+    //     localStorage.getItem('movies')
+    //         ? JSON.parse(localStorage.getItem('movies'))
+    //         : []
+    // );
+    // const [user, setUser] = useState(
+    //     localStorage.getItem('user')
+    //         ? JSON.parse(localStorage.getItem('user'))
+    //         : null
+    // );
+    // const [token, setToken] = useState(
+    //     localStorage.getItem('token')
+    // );
 
 
     useEffect(() => {
@@ -47,19 +55,21 @@ export const MainView = () => {
             .then((response) => response.json())
             .then((movies) => {
                 localStorage.setItem("movies", JSON.stringify(movies));
-                setMovies(movies);
+                dispatch(setUser(user))
+                dispatch(setMovies(movies));
+                dispatch(setToken(token));
             });
     }, [token]);
 
     return (
         <BrowserRouter>
             <NavigationBar
-                user={user}
-                onLoggedOut={() => {
-                    setUser(null);
-                    setToken(null)
-                    localStorage.clear();
-                }}
+            // user={user}
+            // onLoggedOut={() => {
+            //     setUser(null);
+            //     setToken(null)
+            //     localStorage.clear();
+            //}}
             />
             <Row className="justify-content-md-center">
                 <Routes>
@@ -87,13 +97,14 @@ export const MainView = () => {
                                 ) : (
                                     <Col md={5}>
                                         <LoginView
-                                            onLoggedIn={(user, token, data) => {
-                                                setUser(user);
-                                                setToken(token);
-                                                localStorage.setItem('user', JSON.stringify(user));
-                                                localStorage.setItem('token', token),
-                                                    history.back();
-                                            }} />
+                                        // onLoggedIn={(user, token, data) => {
+                                        //     setUser(user);
+                                        //     setToken(token);
+                                        //     localStorage.setItem('user', JSON.stringify(user));
+                                        //     localStorage.setItem('token', token),
+                                        //         history.back();
+                                        // }} 
+                                        />
                                     </Col>
                                 )}
                             </>
@@ -110,7 +121,7 @@ export const MainView = () => {
                                     <Col>The list is empty!</Col>
                                 ) : (
                                     <Col md={8}>
-                                        <MovieView movies={movies} />
+                                        <MovieView />
                                     </Col>
                                 )}
                             </>
@@ -130,12 +141,13 @@ export const MainView = () => {
                                             <Col className="mb-5" key={movie._id} sm={5} md={3}>
                                                 <br />
                                                 <br />
-                                                <MovieCard
+                                                <MovieList />
+                                                {/* <MovieCard
                                                     movie={movie}
-                                                // user={user}
-                                                // token={token}
-                                                // setUser={setUser}
-                                                />
+                                                    user={user}
+                                                    token={token}
+                                                    setUser={setUser}
+                                                /> */}
                                             </Col>
                                         ))}
                                     </>
