@@ -36,7 +36,13 @@ export const MainView = () => {
         if (!token) return;
 
         fetch("https://shyflixapp.herokuapp.com/movies", {
-            headers: { Authorization: `Bearer ${token}` },
+
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+
+
         })
             .then((response) => response.json())
             .then((movies) => {

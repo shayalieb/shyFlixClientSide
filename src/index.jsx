@@ -5,12 +5,18 @@ import Container from 'react-bootstrap/Container';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
+import background from '../img/background-image.jpg';
 
 const App = () => {
     return (
-            <Container>
+        <div className='background-img' style={{backgroundImage: `url(${background})`,
+        }}>
+            <Container> 
+           
                 <MainView />
+              
             </Container>
+            </div>
     );
 };
 

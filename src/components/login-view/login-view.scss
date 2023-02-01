@@ -1,22 +1,35 @@
-.welcome-login {
-    padding-top: 100px;
-    text-align: center;
-    color: #595856;
-    display: inline-block;
+$textColor-1: #19191a;
+$textColor-2: #3a3a40;
+$cardBackground: #9ca0a1;
+
+
+#cardInfo {
+    background-color: $cardBackground;
+    border-radius: 10;
+    padding-left: 50px;
+    padding-right: 50px;
+    display: flex;
+    margin-top: 50;
+    opacity: 0.85;
 }
 
+
+.welcome-login {
+    padding-top: 10px;
+    text-align: center;
+    display: flexbox;
+}
+
+
 .login-form {
-    padding-top: 75px;
+    padding-top: 30px;
 }
 
 
 .text-enter {
-    padding-top: 30px;
     justify-content: center;
     color: #04195e;
     text-align: center;
-    content: '\a';
-    white-space: pre;
 }
 
 Form {
@@ -25,5 +38,36 @@ Form {
 
 .login-button {
     padding-top: 30px;
-    display: grid;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 30px;
+}
+
+.welcome-login {
+    color: $textColor-2;
+    font-weight: bold;
+    font-size: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+p {
+    color: $textColor-1;
+    font-weight: lighter;
+    font-size: 25px;
+}
+
+
+.login-username {
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.login-password {
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.login-button {
+    margin-bottom: 30px;
+    padding: 50;
 }

@@ -1,6 +1,7 @@
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Logo from './shyflix-logo.png'
 
 export function NavigationBar({ user, onLoggedOut }) {
 
@@ -8,7 +9,7 @@ export function NavigationBar({ user, onLoggedOut }) {
         <Navbar className='navbar' bg='dark' variant='dark' expand='md' fixed='top'>
             <Container>
                 <Navbar.Brand className='navbar-title'>
-                    shyFlix Movie App
+                    <img className='log' src={Logo} />
                 </Navbar.Brand>
                 <Nav>
                     {!user ? (

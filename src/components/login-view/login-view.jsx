@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card'
 import { PropTypes } from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import './login-view.scss'
@@ -19,7 +20,9 @@ export const LoginView = ({ onLoggedIn }) => {
         fetch('https://shyflixapp.herokuapp.com/login', {
             method: 'POST',
             body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json'
+            },
         })
             .then((response) => response.json())
             .then((data) => {
@@ -40,38 +43,45 @@ export const LoginView = ({ onLoggedIn }) => {
     };
 
     return (
+        <Card className='card cardalign w-100' id='cardInfo'>
+            <Form className='login-form' onSubmit={handleSubmit}>
+                <Card.Header className='login-text'>
+                    <h1 className='welcome-login'>Welcome to the the shyFlix Movie App!</h1>
+                    <p>Keep track of all thing move related. Have favorite movies? keep track of all your favorite movies, as well as what you watched and what you want to watch!</p>
+                </Card.Header>
+                <Card.Title className='login-form'>
+                    <h2 className='text-enter'>Login</h2>
+                </Card.Title>
+                <Card.Body className='card-inputs'>
+                    <Form.Group controlId='formUsername'>
+                        <Form.Label className='login-username'>Username: </Form.Label>
+                        <Form.Control
+                            type='text'
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                            minLength='6'
+                            placeholder='Enter username'
+                        />
+                    </Form.Group>
 
-        <Form className='login-form' onSubmit={handleSubmit}>
-            <h1 className='welcome-login'>Welcome to the the shyFlix Movie App!</h1>
+                    <Form.Group controlId='formPassword'>
+                        <Form.Label className='login-password'>Password: </Form.Label>
+                        <Form.Control
+                            type='password'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            minLength='8'
+                            placeholder='Enter password'
+                        />
+                    </Form.Group>
 
-            <h2 className='text-enter'>Login</h2>
-            <hr />
-            <Form.Group controlId='formUsername'>
-                <Form.Label>Username: </Form.Label>
-                <Form.Control
-                    type='text'
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                    minLength='6'
-                />
-            </Form.Group>
+                    <Button className='button login-button' size='lg' variant='primary' type='submit'>Login</Button>
+                </Card.Body>
+            </Form>
 
-            <Form.Group controlId='formPassword'>
-                <Form.Label>Password: </Form.Label>
-                <Form.Control
-                    type='password'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    minLength='8'
-                />
-            </Form.Group>
-
-            <Button className='button login-button' size='lg' variant='primary' type='submit'>Login</Button>
-        </Form>
-
-
+        </Card>
     );
 };
 

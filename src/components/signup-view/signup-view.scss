@@ -1,0 +1,74 @@
+$textColor-1: #19191a;
+$textColor-2: #3a3a40;
+$cardBackground: #9ca0a1;
+// * {box-sizing:border-box;}
+
+// .signup-container {
+//     background-color: $cardBackground;
+
+// }
+
+.form-input {
+    display: block;
+    justify-content: right
+}
+
+.signup-text {
+    color: $textColor-2;
+    opacity: 100;
+}
+
+.signup-welcome {
+    color: $textColor-2;
+    text-align: center;
+    font-weight: lighter;
+}
+
+.signup-text {
+    color: $textColor-2;
+    font-weight: bold;
+    font-size: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-top: 100px;
+}
+
+.signup-more {
+    color: $textColor-2;
+    font-weight: lighter;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size:xx-large;
+}
+
+#formUsername {
+    margin-top: auto;
+}
+
+#formPassword {
+    margin-top: inherit;
+}
+
+#formEmail {
+    margin-top: inherit;
+}
+
+.birthday-input {
+    margin-top: auto;
+}
+
+#formButton {
+    margin-bottom: 20;
+}
+
+#cardInfo {
+    background-color: $cardBackground;
+    border-radius: 10;
+    padding-left: 50px;
+    padding-right: 50px;
+    display: flex;
+    opacity: 0.85;
+}
+
+.text-center {
+    color: #04195e;
+}
+

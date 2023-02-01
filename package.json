@@ -12,7 +12,7 @@
   "author": "Shaya Lieberman",
   "license": "ISC",
   "dependencies": {
-    "@parcel/transformer-js": "^2.8.2",
+    "@parcel/transformer-js": "^2.8.3",
     "@reduxjs/toolkit": "^1.9.1",
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
