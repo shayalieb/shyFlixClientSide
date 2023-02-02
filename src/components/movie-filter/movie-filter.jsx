@@ -8,12 +8,12 @@ export const MovieFilter = () => {
     const dispatch = useDispatch();
 
     return (
-        <Form.FormControl   
+        <Form.Control
             type='text'
             value={filter}
             placeholder='Search movies'
             onChange={(e) => dispatch(setFilter(e.target.value))}
-        />    
+        />
     );
 };
 

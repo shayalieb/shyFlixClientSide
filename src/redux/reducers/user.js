@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { LOGIN } from "../../actions/actions";
+//import { store } from "../store"; 
 
 const userSlice = createSlice({
     name: 'users',
@@ -6,7 +8,9 @@ const userSlice = createSlice({
     reducers: {
         setUser: (state, action) => {
             state.user = action.payload
-        }
+        },
+        type: LOGIN,
+        value
     }
 });
 
