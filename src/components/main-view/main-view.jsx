@@ -20,10 +20,11 @@ import { setToken } from "../../redux/reducers/token"
 
 
 
+
 export const MainView = () => {
 
     const movies = useSelector((state) => state.movies.list);
-    const user = useSelector((state) => state.user)
+    const user = useSelector((state) => state.setUser)
     const token = useSelector((state) => state.token)
     // const [movies, setMovies] = useState(
     //     localStorage.getItem('movies')
@@ -55,9 +56,9 @@ export const MainView = () => {
             .then((response) => response.json())
             .then((movies) => {
                 localStorage.setItem("movies", JSON.stringify(movies));
-                dispatch(setUser(user))
+                //dispatch(setUser(user))
                 dispatch(setMovies(movies));
-                dispatch(setToken(token));
+                // dispatch(setToken(token));
             });
     }, [token]);
 

@@ -3,6 +3,10 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card'
 import { PropTypes } from 'prop-types';
 import Form from 'react-bootstrap/Form';
+import { useDispatch, } from 'react-redux';
+import { store } from '../../redux/store';
+import { setUser } from '../../redux/reducers/user';
+
 import './login-view.scss'
 
 export const LoginView = () => {
@@ -16,7 +20,7 @@ export const LoginView = () => {
             Username: username,
             Password: password
         };
-
+        console.log('message')
         fetch('https://shyflixapp.herokuapp.com/login', {
             method: 'POST',
             body: JSON.stringify(data),
@@ -24,13 +28,17 @@ export const LoginView = () => {
                 'Content-Type': 'application/json'
             },
         })
-            .then((response) => response.json())
+            .then((response) => {
+                console.log(response)
+                return response.json()
+            })
             .then((data) => {
                 console.log('Login response:', data);
                 if (data.user) {
                     localStorage.setItem('user', JSON.stringify(data.user));
                     localStorage.setItem('token', data.token)
-                    dispatch(setUser(data.user, data.token));
+                    console.log(data)
+                    store.dispatch(setUser(data.user, data.token));
                     window.location.reload();
                 } else {
                     alert('The user does not exist');
