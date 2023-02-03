@@ -12,11 +12,15 @@ const moviesSlice = createSlice({
             state.list = action.payload
         },
 
+        getMovie: (state, actions) => {
+            state.list = actions.payload
+        },
+
         setFilter: (state, actions) => {
             state.filter = actions.payload
         }
     }
 });
 
-export const { getMovies, setFilter } = moviesSlice.actions;
+export const { getMovies, setFilter, getMovie } = moviesSlice.actions;
 export default moviesSlice.reducer;

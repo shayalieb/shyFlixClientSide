@@ -1,5 +1,6 @@
 //Actions variation types
 export const LOGIN = 'LOGIN';
+export const SET_USER = 'SET_USER';
 export const LOGOUT = 'LOGOUT';
 export const SIGNUP = 'SIGNUP';
 export const UPDATE_USER = 'UPDATE_USER';
@@ -12,93 +13,96 @@ export const ADD_FAV = 'ADD_FAV';
 export const REMOVE_FAV = 'REMOVE_FAV';
 export const SET_FILTER = 'SET_FILTER'
 
+
+
 //Add actions
-export function LOGIN(value) {
+export function login(value) {
     return {
         type: LOGIN,
         value
     }
 };
 
-export function LOGOUT(value) {
+export function setUser(value) {
+    return {
+        type: SET_USER,
+        value
+    }
+}
+
+export function logout(value) {
     return {
         type: LOGOUT,
         value
     }
 };
 
-export function SIGNUP(value) {
+export function signup(value) {
     return {
         type: SIGNUP,
         value
     }
 };
 
-export function UPDATE_USER(value) {
+export function updateUser(value) {
     return {
         type: UPDATE_USER,
         value
     }
 };
 
-export function DELETE_USER(value) {
+export function deleteUser(value) {
     return {
         type: DELETE_USER,
         value
     }
 };
 
-export function UPDATE_USER(value) {
-    return {
-        type: UPDATE_USER,
-        value
-    }
-};
 
-export function GET_MOVIE(value) {
-    return {
-        type: GET_MOVIE,
-        value
-    }
-};
-
-export function GET_MOVIES(value) {
+export function getMovies(value) {
     return {
         type: GET_MOVIES,
         value
     }
 };
 
+export function getMovie(value) {
+    return {
+        type: GET_MOVIE,
+        value
+    }
+};
 
-export function GET_DIRECTOR(value) {
+
+export function getDirector(value) {
     return {
         type: GET_DIRECTOR,
         value
     }
 };
 
-export function GET_GENRE(value) {
+export function getGenre(value) {
     return {
         type: GET_GENRE,
         value
     }
 };
 
-export function ADD_FAV(value) {
+export function addFav(value) {
     return {
         type: ADD_FAV,
         value
     }
 };
 
-export function REMOVE_FAV(value) {
+export function removeFav(value) {
     return {
         type: REMOVE_FAV,
         value
     }
 };
 
-export function SET_FILTER(value) {
+export function setFilter(value) {
     return {
         type: SET_FILTER,
         value

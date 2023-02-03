@@ -25,7 +25,8 @@
     "react-router": "^6.6.0",
     "react-router-dom": "^6.6.0",
     "react-scripts": "^5.0.1",
-    "react-token-auth": "^2.3.8"
+    "react-token-auth": "^2.3.8",
+    "redux-thunk": "^2.4.2"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.3",

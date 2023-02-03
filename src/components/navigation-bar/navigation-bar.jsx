@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Logo from './shyflix-logo.png'
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser } from '../../redux/reducers/user'
+import { login, logout, updateUser } from '../../redux/reducers/user'
+import { connect } from 'react-redux';
+import { LOGIN, LOGOUT, UPDATE_USER } from '../../actions/actions';
 import './navigation-bar.scss'
 
 export const NavigationBar = () => {
     const user = useSelector((state) => state.user)
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(login, logout);
 
     return (
         <Navbar className='navbar' bg='dark' variant='dark' expand='md' fixed='top'>
@@ -33,7 +35,7 @@ export const NavigationBar = () => {
                                 {user.Username}
                             </Link>
                             <Button className='primary text-light'
-                                onClick={() => dispatch(setUser(null))}
+                                onClick={() => dispatch(logout)}
                             >Logout</Button>
                         </>
                     ) : null}
@@ -44,9 +46,8 @@ export const NavigationBar = () => {
     );
 };
 
-// NavigationBar.propTypes = {
-//     Username: PropTypes.shape({
-//         Username: PropTypes.string.isRequired,
-//     }),
-//     onLoggedOut: PropTypes.func.isRequired,
-// };
+const mapStateToProps = {
+    user: PropTypes.string.isRequired
+};
+
+export default connect(mapStateToProps, { LOGIN, LOGOUT, UPDATE_USER })(NavigationBar)

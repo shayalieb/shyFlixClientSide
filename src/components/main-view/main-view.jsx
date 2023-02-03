@@ -16,7 +16,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { setMovies } from "../../redux/reducers/movies";
 import { setUser } from "../../redux/reducers/user";
 import { MovieList } from "../movie-list/movie-list";
-import { setToken } from "../../redux/reducers/token"
+import { connect } from "react-redux";
+import {
+    login, setUser, logout, signup,
+    updateUser, deleteUser,
+    getMovie, getMovies,
+    addFav, removeFav,
+    setFilter
+} from "../../redux/reducers/user";
+
 
 
 
@@ -56,9 +64,9 @@ export const MainView = () => {
             .then((response) => response.json())
             .then((movies) => {
                 localStorage.setItem("movies", JSON.stringify(movies));
-                //dispatch(setUser(user))
-                dispatch(setMovies(movies));
-                // dispatch(setToken(token));
+                //dispatch(login(user))
+                dispatch(setUser(movies));
+                dispatch(setUser(token));
             });
     }, [token]);
 
@@ -179,4 +187,19 @@ export const MainView = () => {
     );
 };
 
-export default MainView;
+let mapStateToProps = state => {
+    return {
+        movies: state.movies,
+        user: state.user,
+        favoriteMovies: state.favoriteMovies,
+    }
+};
+
+export default connect(mapStateToProps,
+    {
+        login, setUser, logout, signup,
+        updateUser, deleteUser,
+        getMovie, getMovies,
+        addFav, removeFav,
+        setFilter
+    })(MainView);

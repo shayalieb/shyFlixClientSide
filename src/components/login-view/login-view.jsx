@@ -5,14 +5,17 @@ import { PropTypes } from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import { useDispatch } from 'react-redux';
 import { store } from '../../redux/store';
-import { setUser } from '../../redux/reducers/user';
-
+import { login, setUser } from '../../redux/reducers/user';
+import { connect } from 'react-redux';
+//import { login } from '../../actions/actions'
+import { useSelector } from 'react-redux';
 import './login-view.scss'
 
 export const LoginView = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const dispatch = useDispatch();
+    const setUser = useSelector((state) => state.setUser)
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -21,7 +24,7 @@ export const LoginView = () => {
             Username: username,
             Password: password
         };
-        console.log('message')
+
         fetch('https://shyflixapp.herokuapp.com/login', {
             method: 'POST',
             body: JSON.stringify(data),
@@ -36,10 +39,10 @@ export const LoginView = () => {
             .then((data) => {
                 console.log('Login response:', data);
                 if (data.user) {
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                    localStorage.setItem('token', data.token)
+                    // localStorage.setItem('user', JSON.stringify(data.user));
+                    // localStorage.setItem('token', data.token)
                     console.log(data)
-                    dispatch(setUser(data.user, data.token));
+                    setUser(data.setUser, data.token);
                     window.location.reload();
                 } else {
                     alert('The user does not exist');
@@ -97,3 +100,9 @@ export const LoginView = () => {
 LoginView.prototypes = {
     onLoggedIn: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state) => {
+    return { user: state.user };
+};
+
+export default connect(mapStateToProps, { login, setUser })(LoginView);
