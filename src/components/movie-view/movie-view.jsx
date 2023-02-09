@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import { Button, Col, Row, Container } from 'react-bootstrap';
+import { Button, Col, Row, Container, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../redux/reducers/user';
@@ -12,7 +12,7 @@ import PropTypes from 'prop-types'
 
 
 
-export const MovieView = () => {
+export const MovieView = ({ token }) => {
     const user = useSelector((state) => state.user.user);
     const movies = useSelector((state) => state.movies.list);
     const dispatch = useDispatch();
@@ -27,6 +27,7 @@ export const MovieView = () => {
     const similarMovies = movies.filter(
         (m) => m._id !== m._id && m.Genre.Name === movie.Genre.Name
     );
+    console.log(similarMovies, 'similar movies')
     const [isFavorite, setIsFavorite] = useState([]);
 
 
@@ -83,64 +84,73 @@ export const MovieView = () => {
     }
 
     return movie && (
-        <Container>
-            <br />
-            <br />
-            <br />
-            <Row>
-                <Col md={6}>
-                    <img className='w-100' src={movie.imagepath} />
-                </Col>
-                <Col md={6}>
-                    <h1>{movie.title}</h1>
-                    <hr />
-                    <h3>Description: </h3>
-                    <p>{movie.Description}</p>
-                    <br />
-                    <h3>Genre: </h3>
-                    <h6>{movie.Genre.Name}</h6>
-                    <br />
-                    <h3>Director: </h3>
-                    <h6>{movie.Director.Name}</h6>
-                </Col>
-                <Col>
-                    <Link to={`/`} className='w-100 mt-5 text-light btn btn-primary'>
-                        <Button className='back-button' variant='primary'>Back</Button>
-                    </Link>
-                </Col>
-            </Row>
-            <Button
-                onClick={handleFavorite}
-                className='w-100 mt-2 mb-5 text-light btn btn-primary'
-                variant='success'
-                type='submit'
-            >
-                Add Favorite Movie
-            </Button>
-            <Button
-                onClick={removeFavorite}
-                className='w-100 mt-2 mb-5 text-light btn btn-primary'
-                variant='danger'
-                type='submit'
-            >
-                Remove Favorite Movie
-            </Button>
-            <Row className='mt-5'>
-                <Col>
-                    <h2>Similar Movies</h2>
-                    <hr />
-                </Col>
-            </Row>
-            {similarMovies.map((sm) => (
-                <Row
-                    md={10}
-                    className='mb-4'
-                    key={sm._id}
-                >
-                    <MovieCard movie={movie}/>
+
+        <Container className='movie-container'>
+            <Card className='movie-view-card'>
+                <Row>
+                    <Col md={6} className='movie-image'>
+                        <img className='movie-image' src={movie.imagepath} />
+                    </Col>
+                    <Col className='movie-info' md={6}>
+                        <h1>{movie.Title}</h1>
+                        <hr/>
+                        
+                        <h3>Description: </h3>
+                        <p className='movie-description'>{movie.Description}</p>
+                        <hr />
+
+                        <h3>Genre: </h3>
+                        <h6>{movie.Genre.Name}</h6>
+                        <hr />
+
+                        <h3>Director: </h3>
+                        <h6>{movie.Director.Name}</h6>
+                    </Col>
                 </Row>
-            ))}
+                    <div className='button-row'>
+                    <Button
+                        onClick={handleFavorite}
+                        className='movie-view-button'
+                        variant='success'
+                        type='submit'
+                    >
+                        Add Favorite Movie
+                    </Button>
+                   
+                    <Button
+                        onClick={removeFavorite}
+                        className='movie-view-button'
+                        variant='danger'
+                        type='submit'
+                    >
+                        Remove Favorite Movie
+                    </Button>
+                    
+
+                    <Link to={`/`}>
+                        <Button className='movie-view-button' variant='primary' type='submit'>Back</Button>
+                    </Link>
+                    </div>
+
+                    <Row className='mt-5'>
+                        <Col>
+                            <h2>Similar Movies</h2>
+                            <hr />
+                        </Col>
+                    </Row>
+                
+
+                {similarMovies.map((sm) => (
+                    <Row
+                        md={10}
+                        className='mb-4'
+                        key={sm._id}
+                    >
+                        <MovieCard movie={sm} />
+                    </Row>
+                ))}
+            </Card>
         </Container >
     );
-}; 
+};
 

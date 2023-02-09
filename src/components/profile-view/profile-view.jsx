@@ -1,13 +1,15 @@
 import { useState, useParams } from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Row, Col, Form } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form, Card } from 'react-bootstrap';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieList } from '../movie-list/movie-list'
 import { useSelector, useDispatch } from "react-redux";
 import { setUser, setToken } from "../../redux/reducers/user";
+import './profile-view.scss'
 
 
 export const ProfileView = ({ movies }) => {
+    console.log(movies, 'My movies')
     const user = useSelector((state) => state.user.user)
     const token = useSelector((state) => state.user.token);
     const dispatch = useDispatch();
@@ -21,11 +23,11 @@ export const ProfileView = ({ movies }) => {
     const [birthday, updateBirthday] = useState(user.Birthday.substring(0, 10));
 
 
-
+    console.log(user)
     const isFavorite = movies.filter((m) =>
-        user.user.FavoriteMovies.includes(m._id)
+        user.FavoriteMovies.includes(m._id)
     )
-
+    console.log(isFavorite)
     //const showFavorite = movies.filter((m) => {
     //user.FavoriteMovies.includes(m._id)
     //})
@@ -88,16 +90,19 @@ export const ProfileView = ({ movies }) => {
     };
 
     return (
+        
         <>
-            <Form onSubmit={handleSubmit}>
-                <br />
-                <br />
-                <br />
+            <Form className="profile-form" onSubmit={handleSubmit}>
+            <Card className="profile-card">
+                <Card.Title>
                 <h3 className='text-center'>Profile Info</h3>
                 <hr />
+                </Card.Title>
+                <Card.Body className="form-inputs">
                 <Form.Group controlId='updateUsername'>
-                    <Form.Label>Username: </Form.Label>
+                    <Form.Label className="label">Username: </Form.Label>
                     <Form.Control
+                        className="username-input"
                         type='text'
                         value={username}
                         onChange={(e) => updateUsername(e.target.value)}
@@ -107,7 +112,7 @@ export const ProfileView = ({ movies }) => {
                 </Form.Group>
 
                 <Form.Group controlId='updatePassword'>
-                    <Form.Label>Password: </Form.Label>
+                    <Form.Label className="label">Password: </Form.Label>
                     <Form.Control
                         type='password'
                         value={password}
@@ -118,7 +123,7 @@ export const ProfileView = ({ movies }) => {
                 </Form.Group>
 
                 <Form.Group controlId='updateEmail'>
-                    <Form.Label>Email: </Form.Label>
+                    <Form.Label className="label">Email: </Form.Label>
                     <Form.Control
                         type='email'
                         value={email}
@@ -128,7 +133,7 @@ export const ProfileView = ({ movies }) => {
                 </Form.Group>
 
                 <Form.Group controlId='updateBirthday'>
-                    <Form.Label>Birthday: </Form.Label>
+                    <Form.Label className="label">Birthday: </Form.Label>
                     <Form.Control
                         type='date'
                         value={birthday}
@@ -136,34 +141,39 @@ export const ProfileView = ({ movies }) => {
                         placeholder='Update Birthday MM/DD/YYYY'
                     />
                 </Form.Group>
-                <br />
-                <hr />
-                <br />
                 <Button
                     onChange={(e) => handleSubmit(e.target.value)}
-                    className='w-100 mt-2 mb-5 text-light btn btn-primary'
-                    variant='primary'
+                    className='profile-buttons'
+                    variant='success'
                     type='submit'
                 >
                     Update Profile
                 </Button>
-                <Link
-                    to='/'
-                    className='w-100 mt-2 mb-5 text-light btn btn-primary'
-                >
-                    Back
-                </Link>
+            
                 <Button
-                    className='w-100 mt-3 text-light'
+                    className='profile-buttons'
                     variant='danger'
                     type='button'
                     onClick={deleteUser}
                 >
                     Delete Account
                 </Button>
+                <Link
+                    to='/'
+                    className='profile-buttons'
+                >
+                    <Button 
+                        className="profile-buttons"
+                        variant="primary"
+                        type="button">
+                    Back
+                    </Button>
+                </Link>
+                </Card.Body>
+                </Card>
             </Form>
-
-            <Container className='mt-5 pe-0 ps-0'>
+            
+            <Container className='fav-display-title'>
                 <Row>
                     <Col>
                         <h2>Favorite Movies</h2>
@@ -171,12 +181,14 @@ export const ProfileView = ({ movies }) => {
                     </Col>
                 </Row>
                 {isFavorite.map((m) => (
-                    <Col md={3} className='mb-4' key={m._id}>
-                        <MovieList />
+                    <Col md={3} className='fav-display' key={m._id}>
+                        <MovieCard movie={m} />
                     </Col>
                 ))}
             </Container>
+           
         </>
+        
     );
 };
 

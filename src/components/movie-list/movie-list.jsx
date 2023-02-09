@@ -8,10 +8,10 @@ export const MovieList = () => {
     const movies = useSelector((state) => state.movies.list);
     const filter = useSelector((state) => state.movies.filter)
         .trim().toLowerCase();
-    const filteredMovies = movies.filter((movie) => 
-     movie.Title.toLowerCase().includes(filter)
+    const filteredMovies = movies.filter((movie) =>
+        movie.Title.toLowerCase().includes(filter)
     );
-    
+
     return (
         <>
             <Row>
@@ -22,7 +22,7 @@ export const MovieList = () => {
                     <h3>No movies found</h3>
                 ) : (
                     filteredMovies.map((movie) => (
-                        <Col className='mb-100 movie-list' key={movie._id} md={3}>
+                        <Col className='mb-100 movie-list' key={movie.key} md={3}>
                             <MovieCard movie={movie} />
                         </Col>
                     ))

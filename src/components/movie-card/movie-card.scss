@@ -1,4 +1,4 @@
-$textColor-1: #19191a;
+$textColor-1: #000000;
 $textColor-2: #3a3a40;
 $cardBackground: #9ca0a1;
 
@@ -10,7 +10,22 @@ $cardBackground: #9ca0a1;
     padding-right: 50px;
     padding-bottom: 20px;
     opacity: 0.85;
+    justify-content: center;
 }
+
+.card-img {
+    height: 440px;
+    width: 350px;
+}
+
+.card-title {
+    color: $textColor-1;
+}
+
+// .card-genre {
+//     justify-content: center;
+//     margin-left: 40%;
+// }
 
 .card-body {
     background-color: $cardBackground;
@@ -19,4 +34,14 @@ $cardBackground: #9ca0a1;
     padding-right: 50px;
     padding-bottom: 20px;
     opacity: 0.85;
+    justify-content: center;
+    font-weight: bolder;
+    color: $textColor-1
+    
 }
+
+.button-primary {
+    display: inline-block;
+    margin-left: 35%;
+}
+

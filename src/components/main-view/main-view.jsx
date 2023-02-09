@@ -22,7 +22,6 @@ export const MainView = () => {
     const user = useSelector((state) => state.user.user);
     const token = useSelector((state) => state.user.token);
     const movies = useSelector((state) => state.movies.list);
-    const { movieId } = useParams();
 
     //If the token is in local storage, use it to pull all movies request
     useEffect(() => {
@@ -87,7 +86,7 @@ export const MainView = () => {
                                     <Navigate to='/login' />
                                 ) : (
                                     <Col md={10}>
-                                        <ProfileView />
+                                        <ProfileView movies={movies} />
                                     </Col>
                                 )}
                             </>
@@ -95,14 +94,14 @@ export const MainView = () => {
                     />
 
                     {/* The rout to MovieView - open a single movie*/}
-                    <Route path='/movies/movieId'
+                    <Route path='/movies/:movieId'
                         element={
                             <>
                                 {!user ? (
                                     <Navigate to='/login' replace />
                                 ) : (
                                     <Col md={8}>
-                                        <MovieView movies={movies} />
+                                        <MovieView movies={movies} token={token} />
                                     </Col>
                                 )}
                             </>

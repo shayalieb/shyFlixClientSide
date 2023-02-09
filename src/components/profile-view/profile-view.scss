@@ -1,0 +1,83 @@
+$textColor-1: #19191a;
+$textColor-2: #3a3a40;
+$cardBackground: #9ca0a1;
+
+.profile-form {
+    margin-top: 100px;
+    color: $cardBackground;
+    
+}
+
+.profile-card {
+    padding-top: 20;
+    color: $cardBackground;
+    border-radius: 10;
+    opacity: 0.85;
+    margin-top: 120;
+}
+
+.profile-buttons {
+    margin-top: 50px;
+    margin-left: 125px;
+    height: 50px;
+    width: 150px;
+}
+
+// .profile-back-button {
+//     margin-top: 50px;
+//     margin-left: 375px;
+//     height: 50px;
+//     width: 150px;
+// }
+
+.fav-display-title {
+    color: aliceblue;
+    margin-top: 35;
+    margin-left: 50%;
+    font-weight: bolder;
+}
+.label {
+    color: black;
+    justify-content: center;
+    display: grid;
+}
+#updateUsername {
+    color: #19191a;
+    width: 50%;
+    margin-bottom: 18px;
+    margin-left: 25%;
+    display: grid;
+    justify-content: center;
+}
+
+#updatePassword {
+    width: 50%;
+    margin-bottom: 18px;
+    margin-left: 25%;
+    display: grid;
+}
+
+#updateEmail {
+    color: #19191a;
+    width: 50%;
+    margin-bottom: 18px;
+    margin-left: 25%;
+    display: grid;
+}
+
+
+#updateBirthday {
+    color: #19191a;
+    width: 50%;
+    margin-bottom: 18px;
+    margin-left: 25%;
+    display: grid;
+}
+
+h2 {
+    margin-left: 35%;
+}
+.fav-display {
+    display: inline-block;
+    margin-left: 5%;
+}
