@@ -3,18 +3,15 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card'
 import { PropTypes } from 'prop-types';
 import Form from 'react-bootstrap/Form';
-import { useDispatch } from 'react-redux';
-import { store } from '../../redux/store';
-import { login, setUser } from '../../redux/reducers/user';
-import { connect } from 'react-redux';
-//import { login } from '../../actions/actions'
-import { useSelector } from 'react-redux';
+import { setUser, setToken } from '../../redux/reducers/user';
+import { useSelector, useDispatch } from 'react-redux';
 import './login-view.scss'
 
 export const LoginView = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const setUser = useSelector((state) => state.setUser)
+    const dispatch = useDispatch();
+
 
 
     const handleSubmit = (event) => {
@@ -39,10 +36,11 @@ export const LoginView = () => {
             .then((data) => {
                 console.log('Login response:', data);
                 if (data.user) {
-                    // localStorage.setItem('user', JSON.stringify(data.user));
-                    // localStorage.setItem('token', data.token)
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    localStorage.setItem('token', data.token)
                     console.log(data)
-                    setUser(data.setUser, data.token);
+                    dispatch(setUser(data.user));
+                    dispatch(setToken(data.token))
                     window.location.reload();
                 } else {
                     alert('The user does not exist');
@@ -57,11 +55,11 @@ export const LoginView = () => {
     return (
         <Card className='card cardalign w-100' id='cardInfo'>
             <Form className='login-form' onSubmit={handleSubmit}>
-                <Card.Header className='login-text'>
-                    <h1 className='welcome-login'>Welcome to the the shyFlix Movie App!</h1>
-                    <p>Keep track of all thing move related. Have favorite movies? keep track of all your favorite movies, as well as what you watched and what you want to watch!</p>
+                <Card.Header className='card-header'>
+                    <h1 className='welcome-to'>Welcome to the the shyFlix Movie App!</h1>
+                    <p className='welcome-text'>Keep track of all thing move related. Have favorite movies? keep track of all your favorite movies, as well as what you watched and what you want to watch!</p>
                 </Card.Header>
-                <Card.Title className='login-form'>
+                <Card.Title className='card-title'>
                     <h2 className='text-enter'>Login</h2>
                 </Card.Title>
                 <Card.Body className='card-inputs'>
@@ -88,7 +86,8 @@ export const LoginView = () => {
                             placeholder='Enter password'
                         />
                     </Form.Group>
-
+                    <br />
+                    <br></br>
                     <Button className='button login-button' size='lg' variant='primary' type='submit'>Login</Button>
                 </Card.Body>
             </Form>
@@ -101,8 +100,3 @@ LoginView.prototypes = {
     onLoggedIn: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => {
-    return { user: state.user };
-};
-
-export default connect(mapStateToProps, { login, setUser })(LoginView);

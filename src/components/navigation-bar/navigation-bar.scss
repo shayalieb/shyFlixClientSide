@@ -1,5 +1,13 @@
 .navbar {
-    float: left;
+    display: 100%;
     font-size: large;
     font-weight: bold;
+}
+
+.nav-link {
+    padding-right: 50px;
+}
+
+.navbar-title {
+    padding-right: 60%;
 }

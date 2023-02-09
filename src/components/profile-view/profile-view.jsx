@@ -1,26 +1,34 @@
-import { useState } from "react";
+import { useState, useParams } from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Row, Col, Form } from 'react-bootstrap';
 import { MovieCard } from '../movie-card/movie-card';
+import { MovieList } from '../movie-list/movie-list'
+import { useSelector, useDispatch } from "react-redux";
+import { setUser, setToken } from "../../redux/reducers/user";
 
 
 export const ProfileView = ({ movies }) => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    const storedToken = localStorage.getItem('token');
-    const [token, setToken] = useState(storedToken ? storedToken : null)
-    const [user, setUser] = useState(storedUser ? storedUser : null)
+    const user = useSelector((state) => state.user.user)
+    const token = useSelector((state) => state.user.token);
+    const dispatch = useDispatch();
+    // const storedUser = JSON.parse(localStorage.getItem('user'));
+    // const storedToken = localStorage.getItem('token');
+    // const [token, setToken] = useState(storedToken ? storedToken : null)
+    // const [user, setUser] = useState(storedUser ? storedUser : null)
     const [username, updateUsername] = useState(user.Username);
     const [password, updatePassword] = useState('');
     const [email, updateEmail] = useState(user.Email);
     const [birthday, updateBirthday] = useState(user.Birthday.substring(0, 10));
 
-    const favoriteList = movies.filter((m) =>
-        user.FavoriteMovies.includes(m._id)
+
+
+    const isFavorite = movies.filter((m) =>
+        user.user.FavoriteMovies.includes(m._id)
     )
 
-    const showFavorite = movies.filter((m) => {
-        user.FavoriteMovies.includes(m._id)
-    })
+    //const showFavorite = movies.filter((m) => {
+    //user.FavoriteMovies.includes(m._id)
+    //})
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -45,6 +53,7 @@ export const ProfileView = ({ movies }) => {
                 if (response.ok) {
                     alert('Your profile has been updated');
                     localStorage.setItem('user', JSON.stringify(data))
+                    dispatch(setUser(user))
                     window.location.reload()
                 } else {
                     alert('Unable to update your profile')
@@ -69,8 +78,8 @@ export const ProfileView = ({ movies }) => {
                 if (response.ok) {
                     alert('Your account has been deleted');
                     localStorage.clear();
-                    setUser(null);
-                    setToken(null);
+                    dispatch(setUser(null));
+                    dispatch(setToken(null));
                     window.location.reload();
                 } else {
                     alert('Failed to delete you account!')
@@ -156,22 +165,16 @@ export const ProfileView = ({ movies }) => {
 
             <Container className='mt-5 pe-0 ps-0'>
                 <Row>
-                    {favoriteList.length === 0 ? (
-                        <h4>You have no favorite movies</h4>
-                    ) : (
-                        <>
-                            <h2 className="text-start mb-4">Favorite Movies</h2>
-                            {favoriteList.map((movie) => (
-                                <Col className="mb-5" key={movie._id}>
-                                    <MovieCard
-                                        movie={movie}
-                                    />
-
-                                </Col>
-                            ))}
-                        </>
-                    )}
+                    <Col>
+                        <h2>Favorite Movies</h2>
+                        <hr />
+                    </Col>
                 </Row>
+                {isFavorite.map((m) => (
+                    <Col md={3} className='mb-4' key={m._id}>
+                        <MovieList />
+                    </Col>
+                ))}
             </Container>
         </>
     );

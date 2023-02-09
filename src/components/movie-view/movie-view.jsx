@@ -1,23 +1,32 @@
-import { useParams } from 'react-router';
 import React from 'react';
+import { useParams } from 'react-router';
 import { Button, Col, Row, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../redux/reducers/user';
 import { useState } from 'react';
 import { MovieCard } from '../movie-card/movie-card';
 import './movie-view.scss';
-import { useSelector } from 'react-redux';
+import { MovieList } from '../movie-list/movie-list';
+import PropTypes from 'prop-types'
+
 
 
 export const MovieView = () => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    const storedToken = localStorage.getItem('token');
-    const [token, setToken] = useState(storedToken ? storedToken : null);
+    const user = useSelector((state) => state.user.user);
     const movies = useSelector((state) => state.movies.list);
-    const user = useSelector((state) => state.user)
+    const dispatch = useDispatch();
+    //const storedUser = JSON.parse(localStorage.getItem('user'));
+    //const storedToken = localStorage.getItem('token');
+    //const [token, setToken] = useState(storedToken ? storedToken : null);
+    //const movies = useSelector((state) => state.movies.list);
+    //const user = useSelector((state) => state.user)
     // const [user, setUser] = useState(storedUser ? storedUser : null)
     const { movieId } = useParams();
     const movie = movies.find((m) => m._id === movieId)
-    const similarMovies = movies.filter((sm) => sm._id && sm.Genre.Name === movie.Genre.Name);
+    const similarMovies = movies.filter(
+        (m) => m._id !== m._id && m.Genre.Name === movie.Genre.Name
+    );
     const [isFavorite, setIsFavorite] = useState([]);
 
 
@@ -42,7 +51,7 @@ export const MovieView = () => {
                 alert('The movie was added to your favorite movies')
                 JSON.stringify(localStorage.getItem('movies'))
                 localStorage.setItem("user", JSON.stringify(user));
-                setUser(isFavorite);
+                setIsFavorite(isFavorite);
             })
             .catch((err) => {
                 console.error(err);
@@ -65,7 +74,7 @@ export const MovieView = () => {
             .then((user) => {
                 alert('The movie was removed from favorite movies')
                 localStorage.setItem('user', JSON.stringify(user))
-                setUser(setIsFavorite);
+                dispatch(setUser(setIsFavorite));
                 window.location.reload()
             })
             .catch((err) => {
@@ -73,7 +82,7 @@ export const MovieView = () => {
             });
     }
 
-    return (
+    return movie && (
         <Container>
             <br />
             <br />
@@ -128,9 +137,10 @@ export const MovieView = () => {
                     className='mb-4'
                     key={sm._id}
                 >
-                    <MovieCard movie={movie} />
+                    <MovieCard movie={movie}/>
                 </Row>
             ))}
         </Container >
     );
 }; 
+

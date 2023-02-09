@@ -1,26 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GET_MOVIES, GET_MOVIE, GET_DIRECTOR, GET_GENRE, SET_FILTER } from '../../actions/actions'
 
+//The moviesSlice will give us the current state of the movies array 
 const moviesSlice = createSlice({
     name: 'movies',
     initialState: {
         list: [],
-        filter: ''
+        filter: '',
     },
+    //setting reducers and actions
     reducers: {
-        getMovies: (state, action) => {
-            state.list = action.payload
+        setMovies: (state, action) => {
+            state.list = action.payload;
         },
-
-        getMovie: (state, actions) => {
-            state.list = actions.payload
-        },
-
-        setFilter: (state, actions) => {
-            state.filter = actions.payload
+        setFilter: (state, action) => {
+            state.filter = action.payload
         }
     }
 });
 
-export const { getMovies, setFilter, getMovie } = moviesSlice.actions;
+//Export the actions
+export const { setMovies, setFilter } = moviesSlice.actions;
+//Export the reducer
 export default moviesSlice.reducer;

@@ -1,0 +1,22 @@
+$textColor-1: #19191a;
+$textColor-2: #3a3a40;
+$cardBackground: #9ca0a1;
+
+
+.movieCard {
+    background-color: $cardBackground;
+    border-radius: 10;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 20px;
+    opacity: 0.85;
+}
+
+.card-body {
+    background-color: $cardBackground;
+    border-radius: 10;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 20px;
+    opacity: 0.85;
+}
