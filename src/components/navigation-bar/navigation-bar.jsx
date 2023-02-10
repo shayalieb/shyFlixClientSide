@@ -1,45 +1,41 @@
-import { Navbar, Container, Nav, Button } from 'react-bootstrap';
+import { Navbar, Container, Nav } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useState } from 'react-router-dom'
-import { MovieCard } from '../movie-card/movie-card';
-// import { ProfileView } from '../profile-view/profile-view';
-// import { MovieCard } from '../movie-card/movie-card';
-// import { LoginView } from '../login-view/login-view';
-// import { SignupView } from '../signup-view/signup-view';
-// import { MovieView } from '../movie-view/movie-view';
+import Logo from './shyflix-logo.png'
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser, setToken } from '../../redux/reducers/user'
+import Logo from './shyflix-logo.png'
+import './navigation-bar.scss'
 
-export function NavigationBar({ user, onLoggedOut }) {
+export const NavigationBar = () => {
+    const user = useSelector((state) => state.user.user)
+    const dispatch = useDispatch();
 
     return (
-        <Navbar className='navbar' bg='dark' variant='dark' expand='md' fixed='top'>
+        <Navbar className='navbar' bg='dark' variant='dark' expand='lg' fixed='top'>
             <Container>
                 <Navbar.Brand className='navbar-title'>
-                    shyFlix Movie App
+                    <img className='log' src={Logo} />
                 </Navbar.Brand>
-                <Nav>
-                    {!user ? (
+                <Nav className='me-auto'>
+                    {!user && (
                         <>
-                            <Link className='nav-link' to={`/login`}>Login</Link>
-                            <Link className='nav-link' to={`/signup`}>Signup</Link>
+                            <Nav.Link className='nav-link' as={Link} to='/login'>Login</Nav.Link>
+                            <Nav.Link className='nav-link' as={Link} to='/Signup'>Signup</Nav.Link>
                         </>
-                    ) : (
-                        <Link className='nav-link' to={`/`} >Movies
-                        </Link>
-
                     )}
-                    {user ? (
+                    {user && (
                         <>
-                            <Link className='nav-link' to={`/profile`}>
-                                {user.Username}
-                            </Link>
-                            <Button className='primary text-light'
-                                onClick={() => {
-                                    onLoggedOut();
-                                }}
-                            >Logout</Button>
+                            <Nav.Link className='nav-link' as={Link} to='/'>Movies</Nav.Link>
+                            <Nav.Link className='nav-link' as={Link} to='/Profile'>Profile</Nav.Link>
+                            <Nav.Link className='nav-link' as={Link} onClick={() =>
+                                dispatch(setUser(null),
+                                    dispatch(setToken(null)),
+                                    localStorage.clear())}>
+                                Logout
+                            </Nav.Link>
                         </>
-                    ) : null}
+                    )}
                 </Nav>
             </Container>
         </Navbar>
@@ -47,9 +43,8 @@ export function NavigationBar({ user, onLoggedOut }) {
     );
 };
 
-NavigationBar.propTypes = {
-    Username: PropTypes.shape({
-        Username: PropTypes.string.isRequired,
-    }),
-    onLoggedOut: PropTypes.func.isRequired,
+const mapStateToProps = {
+    user: PropTypes.string.isRequired
 };
+
+// export default connect(mapStateToProps, { LOGIN, LOGOUT, UPDATE_USER })(NavigationBar)

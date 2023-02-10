@@ -1,22 +1,36 @@
-import { useState } from "react";
+import { useState, useParams } from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Row, Col, Form } from 'react-bootstrap';
-import PropTypes from 'prop-types';
+import { Button, Container, Row, Col, Form, Card } from 'react-bootstrap';
 import { MovieCard } from '../movie-card/movie-card';
-import { MovieView } from "../movie-view/movie-view";
+import { MovieList } from '../movie-list/movie-list'
+import { useSelector, useDispatch } from "react-redux";
+import { setUser, setToken } from "../../redux/reducers/user";
+import './profile-view.scss'
+
 
 export const ProfileView = ({ movies }) => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    const storedToken = localStorage.getItem('token');
-    const [token, setToken] = useState(storedToken ? storedToken : null)
-    const [user, setUser] = useState(storedUser ? storedUser : null)
+    console.log(movies, 'My movies')
+    const user = useSelector((state) => state.user.user)
+    const token = useSelector((state) => state.user.token);
+    const dispatch = useDispatch();
+    // const storedUser = JSON.parse(localStorage.getItem('user'));
+    // const storedToken = localStorage.getItem('token');
+    // const [token, setToken] = useState(storedToken ? storedToken : null)
+    // const [user, setUser] = useState(storedUser ? storedUser : null)
     const [username, updateUsername] = useState(user.Username);
     const [password, updatePassword] = useState('');
     const [email, updateEmail] = useState(user.Email);
     const [birthday, updateBirthday] = useState(user.Birthday.substring(0, 10));
-    const [favoriteMovies, setFavoriteMovies] = useState(user.FavoriteMovies)
-    const showFavorite = movies.filter((m) => user.FavoriteMovies && user.FavoriteMovies === m._id)
 
+
+    console.log(user)
+    const isFavorite = movies.filter((m) =>
+        user.FavoriteMovies.includes(m._id)
+    )
+    console.log(isFavorite)
+    //const showFavorite = movies.filter((m) => {
+    //user.FavoriteMovies.includes(m._id)
+    //})
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -28,7 +42,7 @@ export const ProfileView = ({ movies }) => {
             Birthday: birthday,
         };
 
-        fetch(`http://localhost:8080/users/${encodeURIComponent(user.Username)}`,
+        fetch(`https://shyflixapp.herokuapp.com/users/${encodeURIComponent(user.Username)}`,
             {
                 method: 'PUT',
                 body: JSON.stringify(data),
@@ -41,6 +55,7 @@ export const ProfileView = ({ movies }) => {
                 if (response.ok) {
                     alert('Your profile has been updated');
                     localStorage.setItem('user', JSON.stringify(data))
+                    dispatch(setUser(user))
                     window.location.reload()
                 } else {
                     alert('Unable to update your profile')
@@ -52,7 +67,7 @@ export const ProfileView = ({ movies }) => {
 
     const deleteUser = () => {
 
-        fetch(`http://localhost:8080/users/${encodeURIComponent(
+        fetch(`https://shyflixapp.herokuapp.com/users/${encodeURIComponent(
             user.Username
         )}`,
             {
@@ -65,8 +80,8 @@ export const ProfileView = ({ movies }) => {
                 if (response.ok) {
                     alert('Your account has been deleted');
                     localStorage.clear();
-                    setUser(null);
-                    setToken(null);
+                    dispatch(setUser(null));
+                    dispatch(setToken(null));
                     window.location.reload();
                 } else {
                     alert('Failed to delete you account!')
@@ -75,16 +90,19 @@ export const ProfileView = ({ movies }) => {
     };
 
     return (
+        
         <>
-            <Form onSubmit={handleSubmit}>
-                <br />
-                <br />
-                <br />
+            <Form className="profile-form" onSubmit={handleSubmit}>
+            <Card className="profile-card">
+                <Card.Title>
                 <h3 className='text-center'>Profile Info</h3>
                 <hr />
+                </Card.Title>
+                <Card.Body className="form-inputs">
                 <Form.Group controlId='updateUsername'>
-                    <Form.Label>Username: </Form.Label>
+                    <Form.Label className="label">Username: </Form.Label>
                     <Form.Control
+                        className="username-input"
                         type='text'
                         value={username}
                         onChange={(e) => updateUsername(e.target.value)}
@@ -94,7 +112,7 @@ export const ProfileView = ({ movies }) => {
                 </Form.Group>
 
                 <Form.Group controlId='updatePassword'>
-                    <Form.Label>Password: </Form.Label>
+                    <Form.Label className="label">Password: </Form.Label>
                     <Form.Control
                         type='password'
                         value={password}
@@ -105,7 +123,7 @@ export const ProfileView = ({ movies }) => {
                 </Form.Group>
 
                 <Form.Group controlId='updateEmail'>
-                    <Form.Label>Email: </Form.Label>
+                    <Form.Label className="label">Email: </Form.Label>
                     <Form.Control
                         type='email'
                         value={email}
@@ -115,7 +133,7 @@ export const ProfileView = ({ movies }) => {
                 </Form.Group>
 
                 <Form.Group controlId='updateBirthday'>
-                    <Form.Label>Birthday: </Form.Label>
+                    <Form.Label className="label">Birthday: </Form.Label>
                     <Form.Control
                         type='date'
                         value={birthday}
@@ -123,84 +141,54 @@ export const ProfileView = ({ movies }) => {
                         placeholder='Update Birthday MM/DD/YYYY'
                     />
                 </Form.Group>
-                <br />
-                <hr />
-                <br />
                 <Button
                     onChange={(e) => handleSubmit(e.target.value)}
-                    className='w-100 mt-2 mb-5 text-light btn btn-primary'
-                    variant='primary'
+                    className='profile-buttons'
+                    variant='success'
                     type='submit'
                 >
                     Update Profile
                 </Button>
-                <Link
-                    to='/'
-                    className='w-100 mt-2 mb-5 text-light btn btn-primary'
-                >
-                    Back
-                </Link>
+            
                 <Button
-                    className='w-100 mt-3 text-light'
+                    className='profile-buttons'
                     variant='danger'
                     type='button'
                     onClick={deleteUser}
                 >
                     Delete Account
                 </Button>
+                <Link
+                    to='/'
+                    className='profile-buttons'
+                >
+                    <Button 
+                        className="profile-buttons"
+                        variant="primary"
+                        type="button">
+                    Back
+                    </Button>
+                </Link>
+                </Card.Body>
+                </Card>
             </Form>
-
-            <Container className='mt-5 pe-0 ps-0'>
+            
+            <Container className='fav-display-title'>
                 <Row>
                     <Col>
-                        <h3>Favorite Movies</h3>
+                        <h2>Favorite Movies</h2>
                         <hr />
-                        <Row md={6} className='fav-movies-card'>
-
-                        </Row>
                     </Col>
                 </Row>
-                {movies.map((fm) => (
-                    <Row
-                        md={3}
-                        className='mb-4'
-                        key={fm._id}
-                    >
-                        <MovieCard 
-                            className='h-100'
-                            movie={fm} />
-                    </Row>
+                {isFavorite.map((m) => (
+                    <Col md={3} className='fav-display' key={m._id}>
+                        <MovieCard movie={m} />
+                    </Col>
                 ))}
-
             </Container>
+           
         </>
+        
     );
 };
-
-// ProfileView.propTypes = {
-//     user: PropTypes.shape({
-//         Username: PropTypes.string.isRequired,
-//         Email: PropTypes.string.isRequired,
-//         Birthday: PropTypes.string.isRequired,
-//         FavoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
-//     }).isRequired,
-//     token: PropTypes.string.isRequired,
-//     setUser: PropTypes.func.isRequired,
-//     setToken: PropTypes.func.isRequired,
-//     movies: PropTypes.arrayOf(
-//         PropTypes.shape({
-//             Title: PropTypes.string.isRequired,
-//             Description: PropTypes.string.isRequired,
-//             imagepath: PropTypes.string.isRequired,
-//             Genre: PropTypes.shape({
-//                 Name: PropTypes.string.isRequired,
-//                 Description: PropTypes.string.isRequired,
-//             }).isRequired,
-//             Director: PropTypes.shape({
-//                 Name: PropTypes.string.isRequired,
-//                 Bio: PropTypes.string.isRequired,
-//             }).isRequired,
-//         }).isRequired
-//     ).isRequired,
-// };
 

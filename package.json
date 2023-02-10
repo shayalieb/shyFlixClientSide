@@ -12,7 +12,8 @@
   "author": "Shaya Lieberman",
   "license": "ISC",
   "dependencies": {
-    "@parcel/transformer-js": "^2.8.2",
+    "@parcel/transformer-js": "^2.8.3",
+    "@reduxjs/toolkit": "^1.9.1",
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
     "prop-types": "^15.8.1",
@@ -20,13 +21,16 @@
     "react-bootstrap": "^2.7.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-router": "^6.6.0",
     "react-router-dom": "^6.6.0",
     "react-scripts": "^5.0.1",
-    "react-token-auth": "^2.3.8"
+    "react-token-auth": "^2.3.8",
+    "redux-thunk": "^2.4.2"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.3",
+    "@redux-devtools/core": "^3.13.1",
     "buffer": "^5.7.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "parcel": "^2.8.3",
