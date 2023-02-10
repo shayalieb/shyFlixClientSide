@@ -25,8 +25,9 @@ export const MovieView = ({ token }) => {
     const { movieId } = useParams();
     const movie = movies.find((m) => m._id === movieId)
     const similarMovies = movies.filter(
-        (m) => m._id !== m._id && m.Genre.Name === movie.Genre.Name
+        (m) => m._id !== movie._id && m.Genre.Name === movie.Genre.Name
     );
+
     console.log(similarMovies, 'similar movies')
     const [isFavorite, setIsFavorite] = useState([]);
 
@@ -93,8 +94,8 @@ export const MovieView = ({ token }) => {
                     </Col>
                     <Col className='movie-info' md={6}>
                         <h1>{movie.Title}</h1>
-                        <hr/>
-                        
+                        <hr />
+
                         <h3>Description: </h3>
                         <p className='movie-description'>{movie.Description}</p>
                         <hr />
@@ -107,7 +108,7 @@ export const MovieView = ({ token }) => {
                         <h6>{movie.Director.Name}</h6>
                     </Col>
                 </Row>
-                    <div className='button-row'>
+                <div className='button-row'>
                     <Button
                         onClick={handleFavorite}
                         className='movie-view-button'
@@ -116,7 +117,7 @@ export const MovieView = ({ token }) => {
                     >
                         Add Favorite Movie
                     </Button>
-                   
+
                     <Button
                         onClick={removeFavorite}
                         className='movie-view-button'
@@ -125,25 +126,25 @@ export const MovieView = ({ token }) => {
                     >
                         Remove Favorite Movie
                     </Button>
-                    
+
 
                     <Link to={`/`}>
                         <Button className='movie-view-button' variant='primary' type='submit'>Back</Button>
                     </Link>
-                    </div>
+                </div>
 
-                    <Row className='mt-5'>
-                        <Col>
-                            <h2>Similar Movies</h2>
-                            <hr />
-                        </Col>
-                    </Row>
-                
+                <Row className='mt-5'>
+                    <Col>
+                        <h2>Similar Movies</h2>
+                        <hr />
+                    </Col>
+                </Row>
+
 
                 {similarMovies.map((sm) => (
                     <Row
-                        md={10}
-                        className='mb-4'
+                        md={3}
+                        className='similar-display'
                         key={sm._id}
                     >
                         <MovieCard movie={sm} />

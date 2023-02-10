@@ -1,13 +1,23 @@
 .navbar {
-    display: 100%;
+    display: 60%;
     font-size: large;
     font-weight: bold;
+
 }
 
 .nav-link {
     padding-right: 50px;
+    margin-right: 20px;
+
 }
 
 .navbar-title {
-    padding-right: 60%;
+    padding-right: 50px;
+}
+
+.search-filter {
+    display: flex;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 120px;
 }
