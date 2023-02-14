@@ -64,7 +64,7 @@ export const LoginView = () => {
                 </Card.Title>
                 <Card.Body className='card-inputs'>
                     <Form.Group controlId='formUsername'>
-                        <Form.Label className='login-username'>Username: </Form.Label>
+                        <Form.Label className='input-keys'>Username: </Form.Label>
                         <Form.Control
                             type='text'
                             value={username}
@@ -76,7 +76,7 @@ export const LoginView = () => {
                     </Form.Group>
 
                     <Form.Group controlId='formPassword'>
-                        <Form.Label className='login-password'>Password: </Form.Label>
+                        <Form.Label className='input-keys'>Password: </Form.Label>
                         <Form.Control
                             type='password'
                             value={password}
@@ -86,9 +86,7 @@ export const LoginView = () => {
                             placeholder='Enter password'
                         />
                     </Form.Group>
-                    <br />
-                    <br></br>
-                    <Button className='button login-button' size='lg' variant='primary' type='submit'>Login</Button>
+                    <Button className='login-button' size='lg' variant='primary' type='submit'>Login</Button>
                 </Card.Body>
             </Form>
 

@@ -15,10 +15,6 @@ $cardBackground: #9ca0a1;
 
 }
 
-// .card-header {
-
-// }
-
 .welcome-to {
     color: $textColor-2;
     font-weight: bold;
@@ -38,21 +34,17 @@ $cardBackground: #9ca0a1;
 
 .text-enter {
     color: #04195e;
-    text-align: center;
-
+    justify-content: center;
+    display: inline-block;
+    margin-left: 40%;
+    margin-top: 25px;
 }
 
-.card-inputs {
+.input-keys {
     display: inline-block;
     text-align: center;
-    margin-left: 90px;
-    margin-right: 90px;
 }
 
-
-// .login-password {
-//    tex;
-// }
 
 #formUsername {
     margin-top: auto;
@@ -62,6 +54,7 @@ $cardBackground: #9ca0a1;
 .login-username {
     text-align: center;
 
+
 }
 
 #formPassword {
@@ -70,8 +63,13 @@ $cardBackground: #9ca0a1;
     flex-direction: column;
 }
 
-
 .login-button {
-    margin-bottom: 20;
-    display: block;
+    display: inline-block;
+    margin-left: 65px;
+    margin-right: 50px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 200px;
+    height: 50px;
+
 }

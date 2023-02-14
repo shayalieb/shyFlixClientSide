@@ -50,7 +50,7 @@ export const SignupView = () => {
                     <h2 className='text-center'>Signup</h2>
 
                     <Form.Group controlId='formUsername'>
-                        <Form.Label>Username: </Form.Label>
+                        <Form.Label className='input-keys'>Username: </Form.Label>
                         <Form.Control
                             type='text'
                             value={username}
@@ -62,7 +62,7 @@ export const SignupView = () => {
                     </Form.Group>
 
                     <Form.Group controlId='formPassword'>
-                        <Form.Label>Password: </Form.Label>
+                        <Form.Label className='input-keys'>Password: </Form.Label>
                         <Form.Control
                             type='password'
                             value={password}
@@ -73,8 +73,8 @@ export const SignupView = () => {
                         />
                     </Form.Group>
 
-                    <Form.Group controlId='formEmail'>
-                        <Form.Label>Email: </Form.Label>
+                    <Form.Group  controlId='formEmail'>
+                        <Form.Label className='input-keys'>Email: </Form.Label>
                         <Form.Control
                             type='email'
                             value={email}
@@ -84,8 +84,8 @@ export const SignupView = () => {
                         />
                     </Form.Group>
 
-                    <Form.Group className='birthday-input' controlId='formBirthday'>
-                        <Form.Label className='text-birthday'>Birthday: </Form.Label>
+                    <Form.Group  controlId='formBirthday'>
+                        <Form.Label className='input-keys'>Birthday: </Form.Label>
                         <Form.Control
                             type='date'
                             value={birthday}
@@ -99,7 +99,7 @@ export const SignupView = () => {
 
                     <Button
                         id='formButton'
-                        className='w=100 mt-3 text-light primary'
+                        className='signup-button'
                         variant='primary'
                         type='submit'
                     >
