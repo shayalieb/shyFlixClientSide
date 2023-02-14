@@ -71,7 +71,7 @@ export const MainView = () => {
                                     <Navigate to='/' />
                                 ) : (
                                     <Col md={5}>
-                                        <LoginView />
+                                        <LoginView user={setUser} token={setToken} />
                                     </Col>
                                 )}
                             </>
