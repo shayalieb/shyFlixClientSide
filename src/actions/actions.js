@@ -1,3 +1,4 @@
+//These actions are an example and not in use on the site
 //Actions variation types
 export const LOGIN = 'LOGIN';
 export const SET_USER = 'SET_USER';

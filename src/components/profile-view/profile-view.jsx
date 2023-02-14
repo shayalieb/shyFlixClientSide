@@ -2,7 +2,6 @@ import { useState, useParams } from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Row, Col, Form, Card } from 'react-bootstrap';
 import { MovieCard } from '../movie-card/movie-card';
-import { MovieList } from '../movie-list/movie-list'
 import { useSelector, useDispatch } from "react-redux";
 import { setUser, setToken } from "../../redux/reducers/user";
 import './profile-view.scss'
@@ -13,10 +12,7 @@ export const ProfileView = ({ movies }) => {
     const user = useSelector((state) => state.user.user)
     const token = useSelector((state) => state.user.token);
     const dispatch = useDispatch();
-    // const storedUser = JSON.parse(localStorage.getItem('user'));
-    // const storedToken = localStorage.getItem('token');
-    // const [token, setToken] = useState(storedToken ? storedToken : null)
-    // const [user, setUser] = useState(storedUser ? storedUser : null)
+
     const [username, updateUsername] = useState(user.Username);
     const [password, updatePassword] = useState('');
     const [email, updateEmail] = useState(user.Email);
@@ -28,9 +24,6 @@ export const ProfileView = ({ movies }) => {
         user.FavoriteMovies.includes(m._id)
     )
     console.log(isFavorite)
-    //const showFavorite = movies.filter((m) => {
-    //user.FavoriteMovies.includes(m._id)
-    //})
 
     const handleSubmit = (event) => {
         event.preventDefault();

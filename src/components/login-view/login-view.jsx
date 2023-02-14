@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card'
 import { PropTypes } from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import { setUser, setToken } from '../../redux/reducers/user';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './login-view.scss'
 
 export const LoginView = () => {

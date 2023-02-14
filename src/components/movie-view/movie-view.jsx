@@ -7,8 +7,6 @@ import { setUser } from '../../redux/reducers/user';
 import { useState } from 'react';
 import { MovieCard } from '../movie-card/movie-card';
 import './movie-view.scss';
-import { MovieList } from '../movie-list/movie-list';
-import PropTypes from 'prop-types'
 
 
 
@@ -16,12 +14,6 @@ export const MovieView = ({ token }) => {
     const user = useSelector((state) => state.user.user);
     const movies = useSelector((state) => state.movies.list);
     const dispatch = useDispatch();
-    //const storedUser = JSON.parse(localStorage.getItem('user'));
-    //const storedToken = localStorage.getItem('token');
-    //const [token, setToken] = useState(storedToken ? storedToken : null);
-    //const movies = useSelector((state) => state.movies.list);
-    //const user = useSelector((state) => state.user)
-    // const [user, setUser] = useState(storedUser ? storedUser : null)
     const { movieId } = useParams();
     const movie = movies.find((m) => m._id === movieId)
     const similarMovies = movies.filter(
