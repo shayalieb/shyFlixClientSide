@@ -114,9 +114,9 @@ export const MainView = () => {
                             <>
                                 {!user ? (
                                     <Navigate to='/login' replace />
-                                ) :
+                                ) : (
                                     <MovieList className='movie-list-home' />
-                                }
+                                )}
                             </>
                         }
                     />
