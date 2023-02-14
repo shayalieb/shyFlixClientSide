@@ -14,8 +14,8 @@ export const NavigationBar = () => {
     return (
         <Navbar className='navbar' bg='dark' variant='dark' expand='lg' fixed='top'>
             <Container>
-                <Navbar.Brand className='navbar-title' as={Link} to='/'>
-                    <img className='logo' src={Logo}  />
+                <Navbar.Brand className='navbar-title'>
+                    <img className='logo' src={Logo} as={Link} to='/' />
                 </Navbar.Brand>
                 <Nav className='me-auto'>
                     {!user && (

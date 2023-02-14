@@ -3,14 +3,16 @@ $textColor-2: #3a3a40;
 $cardBackground: #9ca0a1;
 
 
-.movieCard {
+#movieCard {
     background-color: $cardBackground;
     border-radius: 10;
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10;
+    padding-bottom: 10px;
     opacity: 0.85;
     justify-content: center;
+    margin-top: 50px;
 }
 
 .card-img {
@@ -22,26 +24,8 @@ $cardBackground: #9ca0a1;
     color: $textColor-1;
 }
 
-// .card-genre {
-//     justify-content: center;
-//     margin-left: 40%;
-// }
-
-.card-body {
-    background-color: $cardBackground;
-    border-radius: 10;
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-bottom: 20px;
-    opacity: 0.85;
-    justify-content: center;
-    font-weight: bolder;
-    color: $textColor-1
-    
-}
 
 .button-primary {
     display: inline-block;
     margin-left: 35%;
 }
-
