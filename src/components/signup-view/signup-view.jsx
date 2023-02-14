@@ -73,7 +73,7 @@ export const SignupView = () => {
                         />
                     </Form.Group>
 
-                    <Form.Group  controlId='formEmail'>
+                    <Form.Group controlId='formEmail'>
                         <Form.Label className='input-keys'>Email: </Form.Label>
                         <Form.Control
                             type='email'
@@ -84,7 +84,7 @@ export const SignupView = () => {
                         />
                     </Form.Group>
 
-                    <Form.Group  controlId='formBirthday'>
+                    <Form.Group controlId='formBirthday'>
                         <Form.Label className='input-keys'>Birthday: </Form.Label>
                         <Form.Control
                             type='date'
@@ -94,8 +94,6 @@ export const SignupView = () => {
                             placeholder='Enter Birthday MM/DD/YYYY'
                         />
                     </Form.Group>
-
-
 
                     <Button
                         id='formButton'
