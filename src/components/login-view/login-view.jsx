@@ -41,7 +41,6 @@ export const LoginView = () => {
                     console.log(data)
                     dispatch(setUser(data.user));
                     dispatch(setToken(data.token))
-                    window.location.reload();
                 } else {
                     alert('The user does not exist');
                 }
