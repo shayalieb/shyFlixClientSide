@@ -1,15 +1,9 @@
 $textColor-1: #19191a;
 $textColor-2: #3a3a40;
 $cardBackground: #9ca0a1;
-// * {box-sizing:border-box;}
-
-// .signup-container {
-//     background-color: $cardBackground;
-
-// }
 
 .form-input {
-    display: block;
+    display: inline-block;
     justify-content: right
 }
 
@@ -36,28 +30,39 @@ $cardBackground: #9ca0a1;
     color: $textColor-2;
     font-weight: lighter;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size:xx-large;
+    font-size: xx-large;
+}
+
+.input-keys {
+    margin-left: 40%;
+    margin-top: 25px;
 }
 
 #formUsername {
+    text-align: center;
     margin-top: auto;
+    margin-bottom: auto;
+    display: inline-block
 }
 
 #formPassword {
-    margin-top: inherit;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: inline-block
 }
 
 #formEmail {
+    text-align: center;
     margin-top: inherit;
+    margin-bottom: auto;
+    display: inline-block
 }
 
 .birthday-input {
-    margin-top: auto;
+    margin-top: inherit;
 }
 
-#formButton {
-    margin-bottom: 20;
-}
 
 #cardInfo {
     background-color: $cardBackground;
@@ -70,5 +75,20 @@ $cardBackground: #9ca0a1;
 
 .text-center {
     color: #04195e;
+    justify-content: center;
+    display: inline-block;
+    margin-left: 35%;
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
 
+.signup-button {
+    display: inline-block;
+    margin-left: 65px;
+    margin-right: 50px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 200px;
+    height: 50px;
+
+}
