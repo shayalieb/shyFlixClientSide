@@ -3,14 +3,14 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card'
 import { PropTypes } from 'prop-types';
 import Form from 'react-bootstrap/Form';
-import { setUser, setToken } from '../../redux/reducers/user';
-import { useDispatch } from 'react-redux';
+// import { setUser, setToken } from '../../redux/reducers/user';
+// import { useDispatch } from 'react-redux';
 import './login-view.scss'
 
 export const LoginView = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
 
 
 
@@ -39,8 +39,8 @@ export const LoginView = () => {
                     localStorage.setItem('user', JSON.stringify(data.user));
                     localStorage.setItem('token', data.token)
                     console.log(data)
-                    dispatch(setUser(data.user));
-                    dispatch(setToken(data.token))
+                    // dispatch(setUser(data.user));
+                    // dispatch(setToken(data.token))
                     window.location.reload();
                 } else {
                     alert('The user does not exist');
