@@ -1,20 +1,33 @@
-# shyFlixClientSide
- shyFlix app Client side
+# shyFlix Client Side
 
- The main goal of the shyFlix Movie app is to help users keep track of things related to movies.
- For example:
-    .Create favorite movie list
-    .Have the ability to add and delete movie from your favorites
-    .Filter by Genre, and Director
+This app is the user interface that is bing powered by the shyFlix app that is hosted on Heroku https://shyflixapp.herokuapp.com/documentation
+Design to allow users to login or sign up, view a list of movies, open a movie and view info about that movie, add or remove it from your favorite list of movies, and update or delete a users's profile.
+App link: https://shyflixapp.netlify.app/
 
-How it works:
-    .When a user is signed up the user will login
-    .Once logged in, the user can view all the latest movies
-    .Add to favorites
-    .Remove favorites
-    .Update profile
-    .Delete profile
-    .Search/filter by genre and director
+# App instructions
+
+## Step 1 - 
+
+The user comes to the home page with the ability to login, or sign up
+![login](/img/home-screen.png)
+![Sign up](/img/signup-screen.png)
+
+## Step 2 
+
+The user sees a list of movies with the ability to open up the one of the user's choice.
+![movie card](/img/movie-card.png)
+
+## Step 3
+
+Once the user opens a movie they will see relevant info regarding that movie, and have the ability to add the movie to the user's favorite movies list.
+![movie view](/img/movie-view.png)
+
+## Step 4 
+
+When the user clicks on profile view they will have the ability to view the favorite movies list, and add or remove movies from the favorite users list.
+The user will also have the ability to update their profile or delete their account.
+![profile view](/img/profile-view.png)
+
 
 How the app is built:
 Server side;
@@ -24,7 +37,7 @@ Server side;
     MongoDB - The database location where the server can make requests
 
 Client side (this project)
-    React JSX is the language which allows for writing HTM in React JSX
+    React JSX is the language which allows for writing HTML in React JSX
     React Bootstrap for styling 
     React Router for navigating this app     
 
